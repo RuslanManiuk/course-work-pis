@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mentor Assigned</title>
+  <style>
+    body { margin: 0; padding: 0; background: #0f1117; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    .container { max-width: 560px; margin: 40px auto; background: #1a1d27; border-radius: 12px; overflow: hidden; border: 1px solid #2a2d3e; }
+    .header { background: linear-gradient(135deg, #3ecfcf, #6c63ff); padding: 32px 40px; }
+    .header h1 { margin: 0; color: #fff; font-size: 24px; font-weight: 700; }
+    .body { padding: 32px 40px; }
+    .body p { color: #c8cad6; font-size: 15px; line-height: 1.6; margin: 0 0 16px; }
+    .info-box { background: #0f1117; border: 1px solid #2a2d3e; border-radius: 8px; padding: 16px 20px; margin: 20px 0; }
+    .info-box .label { font-size: 12px; color: #555870; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 4px; }
+    .info-box .value { font-size: 16px; color: #fff; font-weight: 600; margin: 0; }
+    .cta { display: inline-block; background: #3ecfcf; color: #0f1117; text-decoration: none; padding: 14px 32px; border-radius: 8px; font-weight: 700; font-size: 15px; margin-top: 8px; }
+    .footer { padding: 20px 40px; border-top: 1px solid #2a2d3e; }
+    .footer p { color: #555870; font-size: 12px; margin: 0; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Mentor Assigned ✓</h1>
+    </div>
+    <div class="body">
+      <p>Great news! A mentor has been assigned to your help desk ticket.</p>
+      <div class="info-box">
+        <p class="label">Ticket</p>
+        <p class="value">{{ ticket_title }}</p>
+      </div>
+      <div class="info-box">
+        <p class="label">Your Mentor</p>
+        <p class="value">{{ mentor_name }}</p>
+      </div>
+      <p>Your mentor is ready to help. Join the video call to get started:</p>
+      <a href="{{ jitsi_url }}" class="cta">Join Video Call</a>
+    </div>
+    <div class="footer">
+      <p>Powered by Jitsi Meet — open source video conferencing</p>
+    </div>
+  </div>
+</body>
+</html>

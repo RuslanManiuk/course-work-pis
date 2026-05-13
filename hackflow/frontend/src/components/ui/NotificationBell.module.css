@@ -1,0 +1,126 @@
+.root {
+  position: relative;
+}
+
+.bell {
+  position: relative;
+  padding: var(--space-2);
+  border-radius: var(--radius-md);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  transition: color var(--transition-fast), background var(--transition-fast);
+}
+
+.bell:hover {
+  color: var(--text-primary);
+  background: var(--color-bg-tertiary);
+}
+
+.badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  border-radius: var(--radius-full);
+  background: var(--color-danger);
+  color: #fff;
+  font-size: 10px;
+  font-weight: var(--font-bold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+}
+
+.panel {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--space-2));
+  width: 360px;
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.panelHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+  font-weight: var(--font-semibold);
+  font-size: var(--text-sm);
+}
+
+.unreadLabel {
+  font-size: var(--text-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-medium);
+}
+
+.list {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.empty {
+  padding: var(--space-8) var(--space-5);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+.item {
+  padding: var(--space-4) var(--space-5);
+  border-bottom: 1px solid var(--color-border-subtle);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  opacity: 0.65;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item:hover {
+  background: var(--color-bg-tertiary);
+}
+
+.itemUnread {
+  opacity: 1;
+}
+
+.itemUnread::before {
+  content: '';
+  display: block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  align-self: flex-end;
+  margin-bottom: -12px;
+}
+
+.itemTitle {
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  color: var(--text-primary);
+}
+
+.itemMessage {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.itemTime {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+}
