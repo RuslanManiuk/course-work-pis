@@ -3,9 +3,9 @@ import type { HackathonWinner } from '@/api/hackathons';
 import styles from './WinnersPodium.module.css';
 
 const RANK_TEXT: Record<number, string> = {
-  1: '1st place',
-  2: '2nd place',
-  3: '3rd place',
+  1: '[#1] first',
+  2: '[#2] second',
+  3: '[#3] third',
 };
 
 interface WinnersPodiumProps {
@@ -28,7 +28,7 @@ export default function WinnersPodium({ winners }: WinnersPodiumProps) {
       <div>
         <span className={styles.sectionEyebrow}>// Winners</span>
         <h2 className={styles.sectionTitle}>
-          The <span className={styles.titleAccent}>champions</span>
+          $ cat <span className={styles.titleAccent}>winners.json</span>
         </h2>
       </div>
 
@@ -47,7 +47,7 @@ export default function WinnersPodium({ winners }: WinnersPodiumProps) {
               className={styles.runner}
               title={w.note ?? undefined}
             >
-              <span className={styles.runnerRank}>{w.rank}.</span>
+              <span className={styles.runnerRank}>#{w.rank}</span>
               <span className={styles.runnerName}>{w.team_name}</span>
               {w.prize && <span className={styles.runnerPrize}>{w.prize}</span>}
             </Link>

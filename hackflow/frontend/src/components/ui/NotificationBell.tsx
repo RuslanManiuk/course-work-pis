@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNotificationStore } from '@/store/notificationStore';
 import { useWebSocket } from '@/hooks/useWebSocket';
@@ -6,6 +6,15 @@ import { useAuthStore } from '@/store/authStore';
 import apiClient from '@/api/client';
 import type { Notification } from '@/types';
 import styles from './NotificationBell.module.css';
+
+function BellIcon() {
+  return (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="square" strokeLinejoin="miter">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+  );
+}
 
 export default function NotificationBell() {
   const [open, setOpen] = useState(false);
@@ -67,19 +76,19 @@ export default function NotificationBell() {
         onClick={() => setOpen((o) => !o)}
         aria-label="Notifications"
       >
-        🔔
+        <BellIcon />
         {unreadCount > 0 && <span className={styles.badge}>{unreadCount}</span>}
       </button>
 
       {open && (
         <div className={styles.panel}>
           <div className={styles.panelHeader}>
-            <span>Notifications</span>
-            {unreadCount > 0 && <span className={styles.unreadLabel}>{unreadCount} new</span>}
+            <span>// notifications</span>
+            {unreadCount > 0 && <span className={styles.unreadLabel}>[{unreadCount}] new</span>}
           </div>
           <ul className={styles.list}>
             {notifications.length === 0 && (
-              <li className={styles.empty}>No notifications yet</li>
+              <li className={styles.empty}>// no notifications yet</li>
             )}
             {notifications.map((n) => (
               <li

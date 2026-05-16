@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import styles from './AppLayout.module.css';
 import NotificationBell from '@/components/ui/NotificationBell';
 import CommandPalette from '@/components/ui/CommandPalette';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 
 // ── Inline SVG Icons ──────────────────────────────────────────────────────────
 
@@ -331,7 +332,9 @@ export default function AppLayout() {
           </div>
         </header>
         <main className={styles.content}>
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </main>
       </div>
 

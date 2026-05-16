@@ -6,6 +6,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.core.dependencies import CurrentUser, get_session
 from app.core.exceptions import ConflictError, UnauthorizedError
+from app.core.rate_limit import RateLimiter
 from app.core.security import create_token_pair, decode_token, hash_password, verify_password
 from app.db.models.user import User, UserRole
 from app.db.models.profile import UserProfile
@@ -18,7 +19,11 @@ router = APIRouter(prefix="/auth", tags=["Authentication"])
 
 
 @router.post("/register", response_model=TokenResponse, status_code=201)
-async def register(body: RegisterRequest, session: AsyncSession = Depends(get_session)):
+async def register(
+    body: RegisterRequest,
+    session: AsyncSession = Depends(get_session),
+    _rl: None = Depends(RateLimiter(limit=5, window_seconds=300)),
+):
     existing = await session.scalar(select(User).where(User.email == body.email))
     if existing:
         raise ConflictError("Email already registered")
@@ -46,7 +51,11 @@ async def register(body: RegisterRequest, session: AsyncSession = Depends(get_se
 
 
 @router.post("/login", response_model=TokenResponse)
-async def login(body: LoginRequest, session: AsyncSession = Depends(get_session)):
+async def login(
+    body: LoginRequest,
+    session: AsyncSession = Depends(get_session),
+    _rl: None = Depends(RateLimiter(limit=10, window_seconds=60)),
+):
     user = await session.scalar(select(User).where(User.email == body.email))
     if not user or not user.password_hash or not verify_password(body.password, user.password_hash):
         raise UnauthorizedError("Invalid email or password")
