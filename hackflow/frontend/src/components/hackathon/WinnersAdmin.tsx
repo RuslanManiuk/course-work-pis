@@ -99,7 +99,7 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
   function saveRow(index: number) {
     const row = rows[index];
     if (!row.team_id) {
-      setError('Pick a team first');
+      setError('[ERR] pick a team first');
       return;
     }
     upsertWinner.mutate(row);
@@ -115,8 +115,8 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
     <section className={styles.section}>
       <div className={styles.head}>
         <div>
-          <span className={styles.eyebrow}>// Organizer · Winners</span>
-          <div className={styles.title}>Crown the winners</div>
+          <span className={styles.eyebrow}>// organizer · winners</span>
+          <div className={styles.title}>// crown_winners</div>
         </div>
         <button
           type="button"
@@ -125,7 +125,7 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
           disabled={autoSelect.isPending}
           title="Pick top 3 by avg judging score"
         >
-          {autoSelect.isPending ? 'Picking…' : '✨ Auto-pick top 3'}
+          {autoSelect.isPending ? '$ running...' : '$ ai --auto-pick'}
         </button>
       </div>
 
@@ -149,7 +149,7 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
               className={styles.select}
               aria-label="Team"
             >
-              <option value="">— select team —</option>
+              <option value="">// select team</option>
               {teamOptions.map((t) => (
                 <option key={t.team_id} value={t.team_id}>
                   {t.team_name} · {t.avg_score.toFixed(2)}
@@ -166,7 +166,7 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
             <input
               value={row.note}
               onChange={(e) => updateRow(i, { note: e.target.value })}
-              placeholder="Note (optional)"
+              placeholder="// note (optional)"
               className={styles.input}
               aria-label="Note"
             />
@@ -174,11 +174,10 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
               <button
                 type="button"
                 onClick={() => saveRow(i)}
-                className={styles.removeBtn}
-                style={{ background: 'rgba(74,222,128,0.1)', borderColor: 'rgba(74,222,128,0.3)', color: 'var(--color-success)' }}
+                className={styles.saveBtn}
                 disabled={upsertWinner.isPending}
               >
-                Save
+                save
               </button>
               <button type="button" onClick={() => removeRow(i)} className={styles.removeBtn}>
                 ×
@@ -189,7 +188,7 @@ export default function WinnersAdmin({ hackathonId, winners }: WinnersAdminProps
       </div>
 
       <button type="button" onClick={addRow} className={styles.addBtn}>
-        + Add another winner
+        $ add --winner
       </button>
     </section>
   );

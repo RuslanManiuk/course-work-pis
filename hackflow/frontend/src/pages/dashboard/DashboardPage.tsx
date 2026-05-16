@@ -25,7 +25,7 @@ function DeadlineBar({ label, deadline }: { label: string; deadline: string }) {
       <div className={styles.deadlineLabel}>
         <span>{label}</span>
         <span className={passed ? styles.deadlinePassed : urgent ? styles.deadlineUrgent : styles.deadlineOk}>
-          {passed ? 'Passed' : days <= 1 ? `${hours}h left` : `${days}d left`}
+          {passed ? '[EXPIRED]' : days <= 1 ? `ttl:${hours}h` : `ttl:${days}d`}
         </span>
       </div>
       <div className={styles.progressTrack}>
@@ -76,7 +76,7 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
 
       {hackathon && (
         <div className={styles.deadlines}>
-          <DeadlineBar label="Submission deadline" deadline={hackathon.submission_deadline} />
+          <DeadlineBar label="// submission_deadline" deadline={hackathon.submission_deadline} />
         </div>
       )}
 
@@ -164,7 +164,7 @@ export default function DashboardPage() {
         </div>
 
         {!hackathons?.length && (
-          <p className={styles.empty}>No active hackathons right now.</p>
+          <p className={styles.empty}>// no active processes</p>
         )}
 
         <div className={styles.grid}>
@@ -184,7 +184,7 @@ export default function DashboardPage() {
                 <h3 className={styles.cardTitle}>{h.title}</h3>
                 <p className={styles.cardDesc}>{h.description.slice(0, 120)}…</p>
                 <div className={styles.cardMeta}>
-                  <span>Ends {new Date(h.end_date).toLocaleDateString()}</span>
+                  <span>deadline: {new Date(h.end_date).toLocaleDateString()}</span>
                   <span className={styles.statusBadge}>{h.status}</span>
                 </div>
               </div>

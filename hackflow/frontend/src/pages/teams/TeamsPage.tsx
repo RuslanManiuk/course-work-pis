@@ -26,7 +26,7 @@ function CopyButton({ value, label = 'Copy', baseClass, copiedClass }: { value: 
       className={copied ? `${baseClass} ${copiedClass}` : baseClass}
       onClick={handleCopy}
     >
-      {copied ? '✓ Copied!' : label}
+      {copied ? '[ OK ]' : label}
     </button>
   );
 }
@@ -89,14 +89,14 @@ export default function TeamsPage() {
         subtitle="Create a team, ship a project together, or jump into someone else's crew with an invite token."
         actions={
           <button className={styles.primaryBtn} onClick={() => setShowCreate(true)}>
-            + Create team
+            $ mkdir --team
           </button>
         }
       />
 
       {/* Join by invite token */}
       <section className={styles.joinSection}>
-        <h2 className={styles.sectionTitle}>Join a Team</h2>
+        <h2 className={styles.sectionTitle}>// join_team</h2>
         <div className={styles.joinForm}>
           <input
             className={styles.input}
@@ -120,7 +120,7 @@ export default function TeamsPage() {
         </div>
         {joinError && (
           <div className={styles.alertError}>
-            <span className={styles.alertIcon}>⚠</span>
+            <span className={styles.alertIcon}>[ERR]</span>
             <span>{joinError}</span>
           </div>
         )}
@@ -128,11 +128,11 @@ export default function TeamsPage() {
 
       {/* My teams list */}
       <section className={styles.section}>
-        {isLoading && <p className={styles.loading}>Loading teams…</p>}
+        {isLoading && <p className={styles.loading}>$ ls teams/…</p>}
         {!isLoading && !myTeams?.length && (
           <div className={styles.empty}>
-            <p>You're not in any team yet.</p>
-            <p className={styles.emptyHint}>Create a team or join one using an invite token.</p>
+            <p>// no teams found</p>
+            <p className={styles.emptyHint}>$ mkdir --team or join with invite token</p>
           </div>
         )}
 
@@ -178,15 +178,15 @@ export default function TeamsPage() {
                 {isLeader && (
                   <div className={styles.inviteBlock}>
                     <div className={styles.inviteRow}>
-                      <span className={styles.inviteLabel}>Team ID:</span>
+                      <span className={styles.inviteLabel}>// team_id</span>
                       <code className={styles.inviteToken}>{team.id}</code>
                       <CopyButton value={team.id} label="Copy" baseClass={styles.copyBtn} copiedClass={styles.copyBtnCopied} />
                     </div>
                     {team.invite_token && (
                       <div className={styles.inviteRow}>
-                        <span className={styles.inviteLabel}>Invite Token:</span>
+                        <span className={styles.inviteLabel}>// invite_token</span>
                         {isTokenExpired(team.invite_token_expires_at)
-                          ? <span className={styles.tokenExpired}>Expired</span>
+                          ? <span className={styles.tokenExpired}>[EXPIRED]</span>
                           : <code className={styles.inviteToken}>{team.invite_token.slice(0, 16)}…</code>
                         }
                         {!isTokenExpired(team.invite_token_expires_at) && (
@@ -197,7 +197,7 @@ export default function TeamsPage() {
                           onClick={() => regenerateInvite.mutate(team.id)}
                           disabled={regenerateInvite.isPending}
                         >
-                          {regenerateInvite.isPending ? '…' : 'Refresh'}
+                          {regenerateInvite.isPending ? '…' : '$ regen'}
                         </button>
                       </div>
                     )}
@@ -212,7 +212,7 @@ export default function TeamsPage() {
                       rel="noopener noreferrer"
                       className={styles.discordLink}
                     >
-                      💬 Text Channel
+                      [irc] #text
                     </a>
                     {team.discord_voice_channel_id && (
                       <a
@@ -221,7 +221,7 @@ export default function TeamsPage() {
                         rel="noopener noreferrer"
                         className={styles.discordLink}
                       >
-                        🔈 Voice Channel
+                        [voice] connect
                       </a>
                     )}
                   </div>
@@ -229,14 +229,14 @@ export default function TeamsPage() {
 
                 <div className={styles.cardActions}>
                   <Link to={`/workspace/${team.id}`} className={styles.actionBtn}>
-                    Open Workspace
+                    $ cd workspace/
                   </Link>
                   {team.hackathon_id && (
                     <Link
                       to={`/teams/${team.id}/matchmaking`}
                       className={styles.actionBtnSecondary}
                     >
-                      Find Members
+                      $ find --members
                     </Link>
                   )}
                   {!isLeader && (
@@ -244,7 +244,7 @@ export default function TeamsPage() {
                       className={styles.dangerBtn}
                       onClick={() => leaveTeam.mutate(team.id)}
                     >
-                      Leave
+                      $ exit --team
                     </button>
                   )}
                 </div>
@@ -296,7 +296,7 @@ function CreateTeamModal({
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.modalTitle}>Create Team</h2>
+        <h2 className={styles.modalTitle}>// create_team</h2>
 
         <label className={styles.label}>Hackathon</label>
         <select
@@ -328,16 +328,16 @@ function CreateTeamModal({
 
         {error && (
           <div className={styles.alertError}>
-            <span className={styles.alertIcon}>⚠</span>
+            <span className={styles.alertIcon}>[ERR]</span>
             <span>{error}</span>
           </div>
         )}
 
         <div className={styles.modalActions}>
           <button className={styles.primaryBtn} onClick={() => create.mutate()} disabled={!form.name.trim() || !form.hackathon_id || create.isPending}>
-            {create.isPending ? 'Creating…' : 'Create Team'}
+            {create.isPending ? '$ mkdir...' : '$ mkdir --team'}
           </button>
-          <button className={styles.ghostBtn} onClick={onClose}>Cancel</button>
+          <button className={styles.ghostBtn} onClick={onClose}>abort</button>
         </div>
       </div>
     </div>

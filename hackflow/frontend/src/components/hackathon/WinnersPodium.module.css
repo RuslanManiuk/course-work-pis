@@ -13,18 +13,15 @@
 }
 
 .sectionTitle {
-  font-family: var(--font-display);
-  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-family: var(--font-mono);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: var(--font-bold);
-  letter-spacing: -0.035em;
-  line-height: 1.1;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
 }
 
 .titleAccent {
-  background: linear-gradient(135deg, #fbbf24, #f87171);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: oklch(72% 0.28 72);
 }
 
 /* ── Podium ──────────────────────────────────────────────────────────────── */
@@ -43,64 +40,33 @@
   position: relative;
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-top-width: 2px;
   padding: var(--space-6);
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
   text-align: center;
-  isolation: isolate;
-  overflow: hidden;
-  transition: transform var(--transition-base);
+  transition: border-color var(--transition-base);
 }
 
 .spot:hover {
-  transform: translateY(-4px);
+  border-color: var(--color-border);
 }
 
-.spotGold,
-.spotSilver,
-.spotBronze {
-  /* Filled in by ::before gradient */
-}
-
-.spot::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: -1;
-}
-
-.spotGold::before {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(251,191,36,0.30) 0%, transparent 60%),
-    radial-gradient(ellipse at 50% 100%, rgba(251,191,36,0.08) 0%, transparent 60%);
-}
 .spotGold {
-  border-color: rgba(251,191,36,0.4);
-  box-shadow: 0 0 40px rgba(251,191,36,0.15), 0 0 0 1px rgba(251,191,36,0.2);
-  /* Place 1st in the visual center, taller */
+  border-top-color: oklch(72% 0.28 72);
   order: 2;
   padding-top: var(--space-8);
   padding-bottom: var(--space-8);
 }
 
-.spotSilver::before {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(148,163,184,0.22) 0%, transparent 60%);
-}
 .spotSilver {
-  border-color: rgba(148,163,184,0.3);
+  border-top-color: oklch(68% 0.12 240);
   order: 1;
 }
 
-.spotBronze::before {
-  background:
-    radial-gradient(ellipse at 50% 0%, rgba(217,119,6,0.20) 0%, transparent 60%);
-}
 .spotBronze {
-  border-color: rgba(217,119,6,0.3);
+  border-top-color: oklch(62% 0.18 52);
   order: 3;
 }
 
@@ -109,16 +75,16 @@
 }
 
 .medal {
-  font-family: var(--font-display);
+  font-family: var(--font-mono);
   font-size: clamp(2.5rem, 5vw, 4rem);
   font-weight: var(--font-bold);
   line-height: 1;
   margin-bottom: var(--space-1);
 }
 
-.medalGold { background: linear-gradient(135deg, #fde047, #eab308, #d97706); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.medalSilver { background: linear-gradient(135deg, #e2e8f0, #94a3b8, #64748b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.medalBronze { background: linear-gradient(135deg, #fbbf24, #d97706, #92400e); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.medalGold   { color: oklch(72% 0.28 72); }
+.medalSilver { color: oklch(68% 0.12 240); }
+.medalBronze { color: oklch(62% 0.18 52); }
 
 .rankLabel {
   font-family: var(--font-mono);
@@ -129,10 +95,9 @@
 }
 
 .teamName {
-  font-family: var(--font-display);
-  font-size: var(--text-xl);
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
   font-weight: var(--font-bold);
-  letter-spacing: -0.02em;
   line-height: 1.2;
   color: var(--text-primary);
   text-decoration: none;
@@ -143,21 +108,22 @@
   color: var(--color-accent);
 }
 
-.spotGold .teamName { font-size: var(--text-2xl); }
+.spotGold .teamName { font-size: var(--text-xl); }
 
 .prize {
+  font-family: var(--font-mono);
   font-size: var(--text-sm);
   font-weight: var(--font-medium);
   color: var(--color-warning);
-  background: rgba(251,191,36,0.1);
-  border: 1px solid rgba(251,191,36,0.25);
-  border-radius: var(--radius-full);
+  background: oklch(72% 0.28 72 / 0.1);
+  border: 1px solid oklch(72% 0.28 72 / 0.25);
   padding: 4px 10px;
   display: inline-block;
   align-self: center;
 }
 
 .note {
+  font-family: var(--font-mono);
   font-size: var(--text-xs);
   color: var(--text-muted);
   line-height: 1.5;
@@ -180,7 +146,6 @@
 .runner {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
   padding: var(--space-3) var(--space-4);
   display: flex;
   align-items: center;
@@ -195,20 +160,23 @@
 }
 
 .runnerRank {
-  font-family: var(--font-display);
-  font-size: var(--text-lg);
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
   font-weight: var(--font-bold);
   color: var(--text-muted);
-  width: 24px;
+  width: 32px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .runnerName {
+  font-family: var(--font-mono);
   font-weight: var(--font-medium);
   flex: 1;
 }
 
 .runnerPrize {
+  font-family: var(--font-mono);
   font-size: 11px;
   color: var(--color-warning);
 }
