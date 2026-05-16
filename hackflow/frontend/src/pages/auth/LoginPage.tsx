@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { authApi } from '@/api/auth';
 import styles from './Auth.module.css';
 
 function LightningIcon() {
@@ -57,8 +58,12 @@ export default function LoginPage() {
   }
 
   async function handleGithub() {
-    const { data } = await import('@/api/auth').then((m) => m.authApi.githubRedirect());
-    window.location.href = data.redirect_url;
+    try {
+      const { data } = await authApi.githubRedirect();
+      window.location.href = data.redirect_url;
+    } catch (err) {
+      setError('failed to start github oauth');
+    }
   }
 
   return (
