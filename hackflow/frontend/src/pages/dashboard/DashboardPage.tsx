@@ -55,7 +55,7 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
         </div>
         <div className={styles.teamActions}>
           <Link to={`/workspace/${team.id}`} className={styles.workspaceBtn}>
-            Open Workspace →
+            $ cd workspace/
           </Link>
         </div>
       </div>
@@ -84,12 +84,12 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
         <div className={styles.discordLinks}>
           {discordUrl && (
             <a href={discordUrl} target="_blank" rel="noreferrer" className={styles.discordBtn}>
-              💬 Team Chat
+              [irc] #team-chat
             </a>
           )}
           {voiceUrl && (
             <a href={voiceUrl} target="_blank" rel="noreferrer" className={styles.discordBtn}>
-              🔈 Voice Channel
+              [voice] connect
             </a>
           )}
         </div>
@@ -124,16 +124,16 @@ export default function DashboardPage() {
       <section className={styles.hero}>
         <span className={styles.heroEyebrow}>
           <span className={styles.heroPulse} />
-          {activeCount > 0
-            ? `${activeCount} hackathon${activeCount === 1 ? '' : 's'} live now`
-            : 'No live hackathons'}
+          {`● HACKFLOW RUNTIME v2.5.0 · ${activeCount} proc active`}
         </span>
         <h1 className={styles.greeting}>
-          Welcome back, <span className={styles.name}>{user?.username}</span>.
+          <span style={{ color: 'var(--text-muted)', fontSize: '0.55em', display: 'block', marginBottom: 4 }}>$ whoami</span>
+          <span className={styles.name}>{user?.username}</span>
         </h1>
         <p className={styles.subtitle}>
-          Here's what's happening across HackFlow — your teams, your deadlines and the
-          hackathons taking shape right now.
+          {activeCount > 0
+            ? `[PID:${activeCount}] hackathon process${activeCount === 1 ? '' : 'es'} running — check your teams and deadlines.`
+            : 'No active processes. Browse hackathons to join one.'}
         </p>
       </section>
 
@@ -142,9 +142,9 @@ export default function DashboardPage() {
           <div className={styles.sectionHeader}>
             <div>
               <span className={styles.sectionEyebrow}>// My teams</span>
-              <h2 className={styles.sectionTitle}>Teams you're shipping with</h2>
+              <h2 className={styles.sectionTitle}>active team processes</h2>
             </div>
-            <Link to="/teams" className={styles.seeAll}>Manage <span aria-hidden>→</span></Link>
+            <Link to="/teams" className={styles.seeAll}>ls -la →</Link>
           </div>
           <div className={styles.teamsGrid}>
             {myTeams.map((team) => (
@@ -158,9 +158,9 @@ export default function DashboardPage() {
         <div className={styles.sectionHeader}>
           <div>
             <span className={styles.sectionEyebrow}>// Hackathons</span>
-            <h2 className={styles.sectionTitle}>Live and accepting hackers</h2>
+            <h2 className={styles.sectionTitle}>live hackathons · accepting input</h2>
           </div>
-          <Link to="/hackathons" className={styles.seeAll}>View all <span aria-hidden>→</span></Link>
+          <Link to="/hackathons" className={styles.seeAll}>ls -la →</Link>
         </div>
 
         {!hackathons?.length && (

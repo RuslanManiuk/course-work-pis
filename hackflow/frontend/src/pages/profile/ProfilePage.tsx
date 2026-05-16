@@ -93,7 +93,7 @@ export default function ProfilePage() {
     setMentoringExpertise((prev) => prev.filter((_, idx) => idx !== i));
   }
 
-  if (isLoading) return <p className={styles.loading}>Loading profile…</p>;
+  if (isLoading) return <p className={styles.loading}>$ cat profile.json…</p>;
 
   return (
     <div className={styles.root}>
@@ -130,17 +130,17 @@ export default function ProfilePage() {
       >
         {/* ── Bio ──────────────────────────────────────────────────── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>About</h2>
-          <label className={styles.label}>Bio</label>
+          <h2 className={styles.sectionTitle}>// about</h2>
+          <label className={styles.label}>// bio</label>
           <textarea
             className={styles.textarea}
             rows={3}
-            placeholder="Tell others about yourself…"
+            placeholder="echo 'tell others about yourself'…"
             value={bio}
             onChange={(e) => setBio(e.target.value)}
           />
 
-          <label className={styles.label}>Years of Experience</label>
+          <label className={styles.label}>// years_experience</label>
           <input
             type="number"
             className={styles.input}
@@ -153,7 +153,7 @@ export default function ProfilePage() {
 
         {/* ── Skills ───────────────────────────────────────────────── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Skills</h2>
+          <h2 className={styles.sectionTitle}>// skills</h2>
 
           <div className={styles.chips}>
             {skills?.map((s, i) => (
@@ -182,13 +182,13 @@ export default function ProfilePage() {
                 <option key={p} value={p}>{p}</option>
               ))}
             </select>
-            <button type="button" className={styles.addBtn} onClick={addSkill}>+ Add</button>
+            <button type="button" className={styles.addBtn} onClick={addSkill}>push</button>
           </div>
         </section>
 
         {/* ── Tech Stack ───────────────────────────────────────────── */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Tech Stack</h2>
+          <h2 className={styles.sectionTitle}>// tech_stack</h2>
 
           <div className={styles.chips}>
             {techStack?.map((t, i) => (
@@ -218,14 +218,14 @@ export default function ProfilePage() {
               title="Years of experience"
             />
             <span className={styles.yearsLabel}>yrs</span>
-            <button type="button" className={styles.addBtn} onClick={addTech}>+ Add</button>
+            <button type="button" className={styles.addBtn} onClick={addTech}>push</button>
           </div>
         </section>
 
         {/* ── Mentoring Expertise (mentors only) ───────────────────── */}
         {(me?.role === 'mentor' || me?.role === 'organizer') && (
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>Mentoring Expertise</h2>
+            <h2 className={styles.sectionTitle}>// mentoring_expertise</h2>
 
             <div className={styles.chips}>
               {mentoringExpertise.map((e, i) => (
@@ -244,17 +244,17 @@ export default function ProfilePage() {
                 onChange={(e) => setNewExpertise(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addExpertise())}
               />
-              <button type="button" className={styles.addBtn} onClick={addExpertise}>+ Add</button>
+              <button type="button" className={styles.addBtn} onClick={addExpertise}>push</button>
             </div>
           </section>
         )}
 
         {error && <p className={styles.error}>{error}</p>}
-        {saved && <p className={styles.success}>✓ Profile saved!</p>}
+        {saved && <p className={styles.success}>[ OK ] profile saved</p>}
 
         <div className={styles.actions}>
           <button type="submit" className={styles.saveBtn} disabled={save.isPending}>
-            {save.isPending ? 'Saving…' : 'Save Profile'}
+            {save.isPending ? '$ updating...' : '$ write --profile'}
           </button>
         </div>
       </form>

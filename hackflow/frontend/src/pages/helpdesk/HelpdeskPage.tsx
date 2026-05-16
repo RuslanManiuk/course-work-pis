@@ -124,18 +124,18 @@ export default function HelpdeskPage() {
     return (
       <div className={styles.root}>
         <PageHero
-          eyebrow={queueCount > 0 ? `${queueCount} request${queueCount === 1 ? '' : 's'} waiting` : 'Mentor console'}
-          title={<>Mentor the next <HeroAccent>breakthrough</HeroAccent>.</>}
-          subtitle="Pick up open requests, run video sessions and close the loop with resolution notes."
+          eyebrow={queueCount > 0 ? `[${queueCount}] request${queueCount === 1 ? '' : 's'} in queue` : '$ mentor --console'}
+          title={<>$ assign <HeroAccent>--mentor</HeroAccent> --help</>}
+          subtitle="// pick up open requests · run jitsi sessions · close with resolution notes"
           actions={
-            <span className={styles.roleTag}>Mentor · {sessionCount} active</span>
+            <span className={styles.roleTag}>[mentor] · {sessionCount} active</span>
           }
         />
 
         {/* Active sessions */}
         <section>
           <h2 className={styles.sectionTitle}>
-            My Sessions
+            // active_sessions
             {activeSessions && activeSessions.length > 0 && (
               <span className={styles.countBadge}>{activeSessions.length}</span>
             )}
@@ -144,7 +144,7 @@ export default function HelpdeskPage() {
           {loadingActive && <p className={styles.loading}>Loading…</p>}
 
           {!loadingActive && (!activeSessions || activeSessions.length === 0) && (
-            <p className={styles.empty}>No active sessions. Accept a ticket from the queue below.</p>
+            <p className={styles.empty}>// no active sessions · accept a ticket from the queue below</p>
           )}
 
           <div className={styles.list}>
@@ -166,7 +166,7 @@ export default function HelpdeskPage() {
         {/* Open queue */}
         <section>
           <h2 className={styles.sectionTitle}>
-            Open Queue
+            // open_queue
             {queue && queue.length > 0 && (
               <span className={styles.countBadge} style={{ background: 'rgba(248,113,113,.2)', color: '#f87171' }}>
                 {queue.length}
@@ -176,7 +176,7 @@ export default function HelpdeskPage() {
 
           {loadingQueue && <p className={styles.loading}>Loading queue…</p>}
           {!loadingQueue && !queue?.length && (
-            <p className={styles.empty}>Queue is empty — no open requests right now.</p>
+            <p className={styles.empty}>// queue empty · no open requests right now</p>
           )}
 
           <div className={styles.list}>
@@ -204,12 +204,12 @@ export default function HelpdeskPage() {
   return (
     <div className={styles.root}>
       <PageHero
-        eyebrow={openCount > 0 ? `${openCount} active request${openCount === 1 ? '' : 's'}` : 'Need a hand?'}
-        title={<>Get <HeroAccent>unstuck</HeroAccent> faster.</>}
-        subtitle="Drop a request and a mentor will jump on a video call to help you ship — backend, frontend, pitch, anything."
+        eyebrow={openCount > 0 ? `[${openCount}] active request${openCount === 1 ? '' : 's'}` : '$ helpdesk --request'}
+        title={<>$ get-unblocked <HeroAccent>--fast</HeroAccent></>}
+        subtitle="// drop a request · mentor joins jitsi · backend, frontend, pitch — anything"
         actions={
           <button className={styles.addBtn} onClick={() => setShowForm((s) => !s)}>
-            {showForm ? '✕ Cancel' : '+ New ticket'}
+            {showForm ? 'abort' : '$ new --ticket'}
           </button>
         }
       />
@@ -225,7 +225,7 @@ export default function HelpdeskPage() {
 
       {activeTickets.length > 0 && (
         <section>
-          <h2 className={styles.sectionTitle}>Active Requests</h2>
+          <h2 className={styles.sectionTitle}>// active_requests</h2>
           <div className={styles.list}>
             {activeTickets.map((t) => (
               <UserTicketCard key={t.id} ticket={t} />
@@ -236,7 +236,7 @@ export default function HelpdeskPage() {
 
       {doneTickets.length > 0 && (
         <section>
-          <h2 className={styles.sectionTitle} style={{ color: 'var(--text-muted)' }}>Resolved</h2>
+          <h2 className={styles.sectionTitle} style={{ color: 'var(--text-muted)' }}>// resolved</h2>
           <div className={styles.list}>
             {doneTickets.map((t) => (
               <UserTicketCard key={t.id} ticket={t} />
@@ -247,9 +247,9 @@ export default function HelpdeskPage() {
 
       {!loadingMy && !myTickets?.length && (
         <div className={styles.emptyState}>
-          <p className={styles.emptyStateIcon}>🎫</p>
-          <p className={styles.emptyStateText}>No help requests yet.</p>
-          <p className={styles.emptyStateHint}>Click "New Ticket" to ask a mentor for help.</p>
+          <p className={styles.emptyStateIcon}>[ ]</p>
+          <p className={styles.emptyStateText}>// no help requests yet</p>
+          <p className={styles.emptyStateHint}>run $ new --ticket to request mentor help</p>
         </div>
       )}
     </div>
@@ -283,9 +283,9 @@ function QueueTicketCard({
       <p className={styles.desc}>{t.description}</p>
 
       <div className={styles.metaRow}>
-        <span className={styles.metaTag}>📂 {CATEGORY_LABEL[t.category] ?? t.category}</span>
+        <span className={styles.metaTag}>[{CATEGORY_LABEL[t.category] ?? t.category}]</span>
         {hackathonTitle && (
-          <span className={styles.metaTag}>🏆 {hackathonTitle}</span>
+          <span className={styles.metaTag}>[{hackathonTitle}]</span>
         )}
       </div>
 
@@ -295,7 +295,7 @@ function QueueTicketCard({
           onClick={onAccept}
           disabled={isAccepting}
         >
-          {isAccepting ? 'Accepting…' : '✋ Accept Request'}
+          {isAccepting ? '$ accepting...' : '$ accept --ticket'}
         </button>
         <span className={`${styles.statusBadge}`} style={{ background: `${STATUS_COLOR[t.status]}22`, color: STATUS_COLOR[t.status] }}>
           {STATUS_LABEL[t.status]}
@@ -353,16 +353,16 @@ function MentorSessionCard({
 
       <p className={styles.desc}>{t.description}</p>
       <div className={styles.metaRow}>
-        <span className={styles.metaTag}>📂 {CATEGORY_LABEL[t.category] ?? t.category}</span>
+        <span className={styles.metaTag}>[{CATEGORY_LABEL[t.category] ?? t.category}]</span>
         {t.session_start && (
-          <span className={styles.metaTag}>⏱ Session started {timeAgo(t.session_start)}</span>
+          <span className={styles.metaTag}>[session started {timeAgo(t.session_start)}]</span>
         )}
       </div>
 
       {/* Jitsi link — prominent when active */}
       {t.jitsi_room_url && (
         <a href={t.jitsi_room_url} target="_blank" rel="noreferrer" className={styles.jitsiBtn}>
-          🎥 Join Video Session
+          [jitsi] $ join --session →
         </a>
       )}
 
@@ -370,19 +370,19 @@ function MentorSessionCard({
       {isEndingThis && (
         <div className={styles.endForm}>
           <div className={styles.endFormHeader}>
-            <label className={styles.label}>Resolution notes (optional)</label>
+            <label className={styles.label}>// resolution_notes (optional)</label>
             <button
               type="button"
               className={styles.aiBtn}
               disabled={aiNotesLoading}
               onClick={handleAiSuggestNotes}
             >
-              {aiNotesLoading ? '⏳ Thinking…' : '✨ Suggest with AI'}
+              {aiNotesLoading ? '$ thinking...' : '$ ai --suggest-notes'}
             </button>
           </div>
           <textarea
             className={styles.textarea}
-            placeholder="Summarize what was discussed / resolved…"
+            placeholder="// summarize what was discussed / resolved…"
             rows={3}
             value={notes}
             onChange={(e) => setNotes(e.target.value)}
@@ -393,7 +393,7 @@ function MentorSessionCard({
               onClick={() => onEndSession(notes)}
               disabled={isPending}
             >
-              {isPending ? 'Closing…' : '✓ Mark as Resolved'}
+              {isPending ? '$ closing...' : '$ close --resolved'}
             </button>
             <button className={styles.cancelBtn} onClick={onCancelEnd}>Cancel</button>
           </div>
@@ -403,7 +403,7 @@ function MentorSessionCard({
       <div className={styles.ticketActions}>
         {t.status === 'assigned' && !isEndingThis && (
           <button className={styles.startBtn} onClick={onStartSession} disabled={isPending}>
-            {isPending ? 'Starting…' : '▶ Start Session'}
+            {isPending ? '$ starting...' : '$ start --session'}
           </button>
         )}
         {t.status === 'in_progress' && !isEndingThis && (
@@ -411,7 +411,7 @@ function MentorSessionCard({
             className={`${styles.actionBtn} ${styles.actionBtnDanger}`}
             onClick={onOpenEndForm}
           >
-            ✓ End Session
+            $ end --session
           </button>
         )}
         <span className={`${styles.statusBadge}`} style={{ background: `${STATUS_COLOR[t.status]}22`, color: STATUS_COLOR[t.status] }}>
@@ -446,16 +446,16 @@ function UserTicketCard({ ticket: t }: { ticket: HelpDeskTicket }) {
         <span className={`${styles.statusBadge}`} style={{ background: `${STATUS_COLOR[t.status]}22`, color: STATUS_COLOR[t.status] }}>
           {STATUS_LABEL[t.status]}
         </span>
-        <span className={styles.metaTag}>📂 {CATEGORY_LABEL[t.category] ?? t.category}</span>
+        <span className={styles.metaTag}>[{CATEGORY_LABEL[t.category] ?? t.category}]</span>
       </div>
 
       {/* Assigned — waiting for mentor to start */}
       {isAssigned && (
         <div className={styles.assignedBanner}>
-          👨‍💼 Mentor assigned — waiting for them to start the session…
+          [assigned] mentor en route — waiting for session to start…
           {t.jitsi_room_url && (
             <a href={t.jitsi_room_url} target="_blank" rel="noreferrer" className={styles.jitsiInline}>
-              Open room ↗
+              [open room] →
             </a>
           )}
         </div>
@@ -464,14 +464,14 @@ function UserTicketCard({ ticket: t }: { ticket: HelpDeskTicket }) {
       {/* In progress — big Jitsi CTA */}
       {isLive && t.jitsi_room_url && (
         <a href={t.jitsi_room_url} target="_blank" rel="noreferrer" className={styles.jitsiBtn}>
-          🎥 Join Live Session Now
+          [jitsi] $ join --session --live →
         </a>
       )}
 
       {/* Resolved — show mentor notes */}
       {isDone && t.resolution_notes && (
         <div className={styles.resolutionCard}>
-          <p className={styles.resolutionLabel}>📋 Mentor Notes</p>
+          <p className={styles.resolutionLabel}>// resolution_notes</p>
           <p className={styles.resolutionText}>{t.resolution_notes}</p>
         </div>
       )}
@@ -517,10 +517,10 @@ function TicketForm({ onClose, onCreated }: { onClose: () => void; onCreated: ()
 
   return (
     <div className={styles.formCard}>
-      <h2 className={styles.formTitle}>New Help Request</h2>
+      <h2 className={styles.formTitle}>// new_help_request</h2>
       <form className={styles.form} onSubmit={(e) => { e.preventDefault(); create.mutate(); }}>
         <div className={styles.field}>
-          <label className={styles.label}>Team</label>
+          <label className={styles.label}>// team</label>
           <select className={styles.input} value={form.team_id} onChange={(e) => handleTeamChange(e.target.value)} required>
             <option value="">— select your team —</option>
             {myTeams?.map((t) => <option key={t.id} value={t.id}>{t.name}</option>)}
@@ -528,7 +528,7 @@ function TicketForm({ onClose, onCreated }: { onClose: () => void; onCreated: ()
         </div>
 
         <div className={styles.field}>
-          <label className={styles.label}>Hackathon</label>
+          <label className={styles.label}>// hackathon</label>
           <select className={styles.input} value={form.hackathon_id} onChange={(e) => setForm((p) => ({ ...p, hackathon_id: e.target.value }))} required>
             <option value="">— select hackathon —</option>
             {hackathons?.map((h) => <option key={h.id} value={h.id}>{h.title}</option>)}
@@ -536,18 +536,18 @@ function TicketForm({ onClose, onCreated }: { onClose: () => void; onCreated: ()
         </div>
 
         <div className={styles.field}>
-          <label className={styles.label}>Title</label>
-          <input className={styles.input} placeholder="Briefly describe your issue" value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
+          <label className={styles.label}>// title</label>
+          <input className={styles.input} placeholder="briefly describe your issue" value={form.title} onChange={(e) => setForm((p) => ({ ...p, title: e.target.value }))} required />
         </div>
 
         <div className={styles.field}>
-          <label className={styles.label}>Description</label>
-          <textarea className={styles.textarea} placeholder="Explain what you need help with…" value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} rows={4} required />
+          <label className={styles.label}>// description</label>
+          <textarea className={styles.textarea} placeholder="// explain what you need help with…" value={form.description} onChange={(e) => setForm((p) => ({ ...p, description: e.target.value }))} rows={4} required />
         </div>
 
         <div className={styles.formRow}>
           <div className={styles.field} style={{ flex: 1 }}>
-            <label className={styles.label}>Category</label>
+            <label className={styles.label}>// category</label>
             <select className={styles.input} value={form.category} onChange={(e) => setForm((p) => ({ ...p, category: e.target.value }))}>
               <option value="technical">Backend / Technical</option>
               <option value="frontend">Frontend / Design</option>
@@ -556,7 +556,7 @@ function TicketForm({ onClose, onCreated }: { onClose: () => void; onCreated: ()
             </select>
           </div>
           <div className={styles.field} style={{ flex: 1 }}>
-            <label className={styles.label}>Priority</label>
+            <label className={styles.label}>// priority</label>
             <select className={styles.input} value={form.priority} onChange={(e) => setForm((p) => ({ ...p, priority: e.target.value }))}>
               <option value="low">Low</option>
               <option value="medium">Medium</option>
@@ -567,9 +567,9 @@ function TicketForm({ onClose, onCreated }: { onClose: () => void; onCreated: ()
 
         <div className={styles.formRow}>
           <button type="submit" className={styles.submitBtn} disabled={create.isPending}>
-            {create.isPending ? 'Sending…' : 'Send Request'}
+            {create.isPending ? '$ sending...' : '$ submit --ticket'}
           </button>
-          <button type="button" className={styles.cancelBtn} onClick={onClose}>Cancel</button>
+          <button type="button" className={styles.cancelBtn} onClick={onClose}>abort</button>
         </div>
       </form>
     </div>
