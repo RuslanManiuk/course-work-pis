@@ -1,7 +1,7 @@
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap');
 @import './variables.css';
 
-/* ── Reset ──────────────────────────────────────────────────────────────────── */
+/* ── Reset ── */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -9,12 +9,31 @@
 }
 
 html {
-  font-size: 16px;
+  font-size: 14px;
   -webkit-text-size-adjust: 100%;
 }
 
+/* ── CRT + vignette overlay on the whole app ── */
+body::before {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--crt-scanline);
+  mix-blend-mode: multiply;
+}
+body::after {
+  content: '';
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9998;
+  background: var(--crt-vignette);
+}
+
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-mono);
   background-color: var(--color-bg);
   color: var(--text-primary);
   line-height: 1.6;
@@ -29,15 +48,15 @@ body {
   flex-direction: column;
 }
 
-/* ── Base elements ──────────────────────────────────────────────────────────── */
+/* ── Base elements ── */
 a {
   color: var(--color-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
-
 a:hover {
   color: var(--color-primary-hover);
+  text-shadow: var(--shadow-glow-primary);
 }
 
 button {
@@ -52,9 +71,7 @@ input, textarea, select {
   font-size: inherit;
 }
 
-ul, ol {
-  list-style: none;
-}
+ul, ol { list-style: none; }
 
 img, svg {
   display: block;
@@ -62,53 +79,113 @@ img, svg {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-weight: var(--font-semibold);
-  line-height: 1.2;
+  font-weight: var(--font-bold);
+  line-height: 1.1;
   color: var(--text-primary);
-  letter-spacing: -0.025em;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
 }
 
-code, pre {
-  font-family: var(--font-mono);
-}
+code, pre { font-family: var(--font-mono); }
 
-/* ── Scrollbar ──────────────────────────────────────────────────────────────── */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--color-bg);
-}
-
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--color-primary-dim), var(--color-border));
-  border-radius: var(--radius-full);
+  background: var(--color-border);
+  border-radius: 0;
 }
+::-webkit-scrollbar-thumb:hover { background: var(--color-primary); }
 
-::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-primary), var(--color-border));
-}
-
+/* ── Selection ── */
 ::selection {
-  background: rgba(108, 99, 255, 0.35);
-  color: #fff;
+  background: oklch(72% 0.28 72 / 0.30);
+  color: oklch(90% 0.02 72);
 }
 
-/* ── Focus ──────────────────────────────────────────────────────────────────── */
+/* ── Focus ── */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 1px solid var(--color-primary);
   outline-offset: 2px;
+  box-shadow: 0 0 0 3px var(--color-primary-dim);
 }
 
-/* ── Utility classes ────────────────────────────────────────────────────────── */
+/* ── Cursor blink utility ── */
+.cursor-blink {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: var(--color-primary);
+  vertical-align: text-bottom;
+  animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Glitch animation utility ── */
+.glitch {
+  position: relative;
+  display: inline-block;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.glitch::before {
+  color: var(--color-accent);
+  clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  animation: glitch-a 3.5s infinite;
+  opacity: 0.75;
+}
+.glitch::after {
+  color: var(--color-danger);
+  clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  animation: glitch-b 3.5s infinite;
+  opacity: 0.75;
+}
+@keyframes glitch-a {
+  0%, 88%, 100% { transform: translate(0); }
+  90%  { transform: translate(-2px, 1px); }
+  94%  { transform: translate(2px, -1px); }
+  97%  { transform: translate(0); }
+}
+@keyframes glitch-b {
+  0%, 88%, 100% { transform: translate(0); }
+  91%  { transform: translate(2px, 0); }
+  93%  { transform: translate(-2px, 1px); }
+  96%  { transform: translate(0); }
+}
+
+/* ── Amber glow utility ── */
+.glow-amber { text-shadow: var(--shadow-glow-primary); }
+.glow-green  { text-shadow: var(--shadow-glow-accent);  }
+
+/* ── Terminal badge ── */
+.badge {
+  display: inline-block;
+  padding: 1px 8px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.badge-active  { color: var(--color-primary); border-color: oklch(72% 0.28 72 / 0.5); background: oklch(72% 0.28 72 / 0.10); }
+.badge-success { color: var(--color-accent);  border-color: oklch(70% 0.26 140 / 0.5); background: oklch(70% 0.26 140 / 0.10); }
+.badge-danger  { color: var(--color-danger);  border-color: oklch(62% 0.26 22 / 0.5);  background: oklch(62% 0.26 22 / 0.10); }
+.badge-muted   { color: var(--text-muted);    border-color: var(--color-border-subtle); background: transparent; }
+
+/* ── sr-only ── */
 .sr-only {
   position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;

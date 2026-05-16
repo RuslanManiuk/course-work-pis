@@ -219,7 +219,7 @@ export default function AppLayout() {
           </div>
           <span className={styles.statusChip}>
             <span className={styles.statusDot} />
-            All systems live
+            sys:online
           </span>
         </div>
 
@@ -317,7 +317,7 @@ export default function AppLayout() {
               aria-label="Open command palette"
             >
               <SearchIcon />
-              <span>Search hackathons, teams…</span>
+              <span>$ grep -r hackathon teams/</span>
               <kbd>⌘K</kbd>
             </button>
             <span
