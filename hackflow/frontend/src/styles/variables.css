@@ -1,100 +1,110 @@
-/* ── Design Tokens ─────────────────────────────────────────────────────────── */
+/* ── Design Tokens — Terminal Amber Hacker Theme ─────────────────────────── */
 :root {
-  /* Colors */
-  --color-bg: #0f1117;
-  --color-bg-secondary: #1a1d27;
-  --color-bg-tertiary: #22263a;
-  --color-surface: #1e2130;
-  --color-border: #2e3250;
-  --color-border-subtle: #1e2238;
+  /* ── Background layers (true near-black, warm-tinted) */
+  --color-bg:           oklch(6.5% 0.008 65);
+  --color-bg-secondary: oklch(8.5% 0.010 68);
+  --color-bg-tertiary:  oklch(10.5% 0.012 70);
+  --color-surface:      oklch(9% 0.010 67);
+  --color-border:       oklch(20% 0.025 72);
+  --color-border-subtle:oklch(14% 0.015 68);
 
-  --color-primary: #6c63ff;
-  --color-primary-hover: #7d75ff;
-  --color-primary-dim: rgba(108, 99, 255, 0.15);
+  /* ── Primary — Electric Amber/Gold */
+  --color-primary:       oklch(72% 0.28 72);   /* vivid amber */
+  --color-primary-hover: oklch(80% 0.30 74);   /* brighter on hover */
+  --color-primary-dim:   oklch(72% 0.28 72 / 0.14);
 
-  --color-accent: #3ecfcf;
-  --color-accent-hover: #4de0e0;
-  --color-accent-dim: rgba(62, 207, 207, 0.15);
+  /* ── Accent — Phosphor Green (for OK states, secondary actions) */
+  --color-accent:        oklch(70% 0.26 140);
+  --color-accent-hover:  oklch(78% 0.28 138);
+  --color-accent-dim:    oklch(70% 0.26 140 / 0.14);
 
-  --color-success: #4ade80;
-  --color-warning: #fbbf24;
-  --color-danger: #f87171;
-  --color-info: #60a5fa;
+  /* ── Semantic */
+  --color-success: oklch(70% 0.24 140);
+  --color-warning: oklch(74% 0.26 72);
+  --color-danger:  oklch(62% 0.26 22);
+  --color-info:    oklch(65% 0.20 240);
 
-  /* Text */
-  --text-primary: #e8eaf0;
-  --text-secondary: #9398b0;
-  --text-muted: #5a5f7a;
-  --text-inverse: #0f1117;
+  /* ── Text */
+  --text-primary:   oklch(88% 0.018 72);   /* warm near-white */
+  --text-secondary: oklch(60% 0.060 72);
+  --text-muted:     oklch(38% 0.030 68);
+  --text-inverse:   oklch(8% 0.008 65);
 
-  /* Typography */
-  --font-sans: 'Space Grotesk', 'Inter', 'Segoe UI', system-ui, sans-serif;
-  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  /* ── Typography — Monospace first */
+  --font-sans:    'JetBrains Mono', 'IBM Plex Mono', 'Fira Code', monospace;
+  --font-mono:    'JetBrains Mono', 'IBM Plex Mono', monospace;
+  --font-display: 'JetBrains Mono', monospace;
 
-  --text-xs: 0.75rem;
-  --text-sm: 0.875rem;
-  --text-base: 1rem;
-  --text-lg: 1.125rem;
-  --text-xl: 1.25rem;
-  --text-2xl: 1.5rem;
-  --text-3xl: 1.875rem;
-  --text-4xl: 2.25rem;
+  --text-xs:   0.70rem;
+  --text-sm:   0.80rem;
+  --text-base: 0.875rem;
+  --text-lg:   1rem;
+  --text-xl:   1.125rem;
+  --text-2xl:  1.375rem;
+  --text-3xl:  1.75rem;
+  --text-4xl:  2.25rem;
 
-  --font-normal: 400;
-  --font-medium: 500;
+  --font-normal:   400;
+  --font-medium:   500;
   --font-semibold: 600;
-  --font-bold: 700;
+  --font-bold:     700;
 
-  /* Spacing */
-  --space-1: 0.25rem;
-  --space-2: 0.5rem;
-  --space-3: 0.75rem;
-  --space-4: 1rem;
-  --space-5: 1.25rem;
-  --space-6: 1.5rem;
-  --space-8: 2rem;
+  /* ── Spacing */
+  --space-1:  0.25rem;
+  --space-2:  0.5rem;
+  --space-3:  0.75rem;
+  --space-4:  1rem;
+  --space-5:  1.25rem;
+  --space-6:  1.5rem;
+  --space-8:  2rem;
   --space-10: 2.5rem;
   --space-12: 3rem;
   --space-16: 4rem;
   --space-20: 5rem;
 
-  /* Border radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* ── Border radius — sharp, terminal-style */
+  --radius-sm:   2px;
+  --radius-md:   3px;
+  --radius-lg:   4px;
+  --radius-xl:   6px;
   --radius-full: 9999px;
 
-  /* Shadows */
-  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.6);
-  --shadow-glow-primary: 0 0 20px rgba(108, 99, 255, 0.3);
-  --shadow-glow-accent: 0 0 20px rgba(62, 207, 207, 0.3);
+  /* ── Shadows + Glows */
+  --shadow-sm: 0 1px 3px oklch(0% 0 0 / 0.6);
+  --shadow-md: 0 4px 16px oklch(0% 0 0 / 0.7);
+  --shadow-lg: 0 8px 32px oklch(0% 0 0 / 0.8);
 
-  /* Transitions */
-  --transition-fast: 120ms ease;
-  --transition-base: 200ms ease;
-  --transition-slow: 350ms ease;
+  --shadow-glow-primary:    0 0 16px oklch(72% 0.28 72 / 0.45);
+  --shadow-glow-primary-lg: 0 0 32px oklch(72% 0.28 72 / 0.55), 0 0 64px oklch(72% 0.28 72 / 0.20);
+  --shadow-glow-accent:     0 0 16px oklch(70% 0.26 140 / 0.40);
+  --shadow-glow-accent-lg:  0 0 32px oklch(70% 0.26 140 / 0.50), 0 0 64px oklch(70% 0.26 140 / 0.18);
 
-  /* Layout */
-  --sidebar-width: 240px;
-  --header-height: 60px;
-  --content-max-width: 1200px;
+  /* ── Transitions */
+  --transition-fast: 100ms ease;
+  --transition-base: 180ms ease;
+  --transition-slow: 320ms ease;
 
-  /* Gradients */
-  --gradient-brand: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent) 100%);
-  --gradient-brand-subtle: linear-gradient(135deg, rgba(108,99,255,0.18) 0%, rgba(62,207,207,0.10) 100%);
-  --gradient-brand-text: linear-gradient(90deg, var(--color-primary), var(--color-accent));
-  --gradient-dark-panel: linear-gradient(160deg, #0d0f1a 0%, #12152b 60%, #0f1117 100%);
+  /* ── Layout */
+  --sidebar-width:     260px;
+  --header-height:     52px;
+  --content-max-width: 1280px;
 
-  /* Enhanced glow */
-  --shadow-glow-primary-lg: 0 0 40px rgba(108,99,255,0.45), 0 0 80px rgba(108,99,255,0.15);
-  --shadow-glow-accent-lg: 0 0 40px rgba(62,207,207,0.45), 0 0 80px rgba(62,207,207,0.15);
+  /* ── Gradients */
+  --gradient-brand:        linear-gradient(135deg, oklch(72% 0.28 72) 0%, oklch(68% 0.26 85) 100%);
+  --gradient-brand-subtle: linear-gradient(135deg, oklch(72% 0.28 72 / 0.12) 0%, oklch(70% 0.26 140 / 0.06) 100%);
+  --gradient-brand-text:   none; /* no gradient text — solid amber only */
+  --gradient-dark-panel:   linear-gradient(160deg, oklch(6% 0.006 65) 0%, oklch(8% 0.010 68) 100%);
 
-  /* Nav active */
-  --nav-active-bg: linear-gradient(90deg, rgba(108,99,255,0.18) 0%, rgba(108,99,255,0.04) 100%);
+  /* ── CRT / Scanline overlay (applied via ::before on body) */
+  --crt-scanline: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    oklch(0% 0 0 / 0.06) 2px,
+    oklch(0% 0 0 / 0.06) 4px
+  );
+  --crt-vignette: radial-gradient(ellipse at 50% 50%, transparent 55%, oklch(4% 0.005 65) 100%);
 
-  /* Display font */
-  --font-display: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+  /* ── Nav active state */
+  --nav-active-bg: linear-gradient(90deg, oklch(72% 0.28 72 / 0.14) 0%, transparent 100%);
 }

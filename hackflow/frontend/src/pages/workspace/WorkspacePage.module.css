@@ -100,7 +100,7 @@
 .column {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border-subtle);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   overflow: hidden;
   position: relative;
 }
@@ -142,7 +142,7 @@
 .columnDot {
   width: 8px;
   height: 8px;
-  border-radius: 50%;
+  border-radius: 0;
   display: inline-block;
 }
 
@@ -156,7 +156,7 @@
   font-family: var(--font-mono);
   padding: 2px 8px;
   background: var(--color-bg-tertiary);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   color: var(--text-muted);
 }
 
@@ -195,7 +195,7 @@
 }
 
 /* Color stripe by label */
-.cardLabelFeature::before { background: linear-gradient(180deg, #6c63ff, #8b5cf6); box-shadow: 0 0 12px rgba(108,99,255,0.5); }
+.cardLabelFeature::before { background: linear-gradient(180deg, oklch(72% 0.28 72), oklch(68% 0.26 72)); box-shadow: 0 0 12px oklch(72% 0.28 72 / 0.40); }
 .cardLabelBug::before     { background: linear-gradient(180deg, #f87171, #dc2626); box-shadow: 0 0 12px rgba(248,113,113,0.5); }
 .cardLabelDesign::before  { background: linear-gradient(180deg, #ec4899, #db2777); box-shadow: 0 0 12px rgba(236,72,153,0.5); }
 .cardLabelDocs::before    { background: linear-gradient(180deg, #60a5fa, #2563eb); box-shadow: 0 0 12px rgba(96,165,250,0.5); }
@@ -205,7 +205,6 @@
 .card:hover {
   border-color: var(--color-border);
   box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
 }
 
 .labelChip {
@@ -227,7 +226,7 @@
 .labelDot {
   width: 5px;
   height: 5px;
-  border-radius: 50%;
+  border-radius: 0;
   background: currentColor;
 }
 
@@ -327,7 +326,7 @@
 .submissionPanel {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-lg);
+  border-radius: 0;
   padding: var(--space-5) var(--space-6);
   display: flex;
   flex-direction: column;
@@ -365,7 +364,7 @@
   font-size: var(--text-xs);
   font-weight: var(--font-semibold);
   padding: 2px var(--space-2);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   background: var(--color-bg-tertiary);
@@ -406,7 +405,7 @@
   font-weight: var(--font-medium);
   padding: var(--space-1) var(--space-3);
   border: 1px solid var(--color-primary);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   text-decoration: none;
   transition: background var(--transition-base);
 }
@@ -447,7 +446,7 @@
 .langDotInline {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: 0;
   display: inline-block;
 }
 
@@ -458,7 +457,7 @@
   background: var(--color-accent-dim);
   border: 1px solid rgba(62, 207, 207, 0.3);
   padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   cursor: pointer;
   white-space: nowrap;
   transition: background 0.15s;
