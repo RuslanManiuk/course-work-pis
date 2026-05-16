@@ -2,7 +2,6 @@
 set -e
 
 BACKEND=${BACKEND_URL:-http://localhost:8000}
-WS_BACKEND=$(echo "$BACKEND" | sed 's|https://|wss://|; s|http://|ws://|')
 
 cat > /etc/nginx/conf.d/default.conf << EOF
 server {
@@ -20,7 +19,7 @@ server {
     }
 
     location /ws {
-        proxy_pass ${WS_BACKEND};
+        proxy_pass ${BACKEND};
         proxy_http_version 1.1;
         proxy_set_header Upgrade \$http_upgrade;
         proxy_set_header Connection "upgrade";
