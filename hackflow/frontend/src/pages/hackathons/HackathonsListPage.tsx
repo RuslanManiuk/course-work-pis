@@ -84,7 +84,7 @@ function HackathonCard({ h }: { h: Hackathon }) {
         <div className={styles.cardFoot}>
           <span>{h.min_team_size}–{h.max_team_size} per team</span>
           <span className={styles.cardFootCta}>
-            View details <span aria-hidden>→</span>
+            $ cat details →
           </span>
         </div>
       </div>
@@ -137,23 +137,23 @@ export default function HackathonsListPage() {
       <section className={styles.hero}>
         <span className={styles.heroEyebrow}>
           <span className={styles.heroPulse} />
-          {counts.active > 0 ? `${counts.active} hackathons live now` : 'Hackathon platform'}
+          {counts.active > 0 ? `[${counts.active}] hackathons live now` : '$ hackflow --platform'}
         </span>
         <h1 className={styles.heroTitle}>
           Build, ship and{' '}
-          <span className={styles.heroTitleAccent}>compete</span>
-          <br />in world-class hackathons.
+          <span className={styles.heroTitleAccent}>win</span>
+          <br />$ ./hackathon --enter
         </h1>
         <p className={styles.heroSubtitle}>
-          HackFlow brings together developers, mentors and judges around fast-paced
-          innovation events. Find a challenge worth your weekend.
+          // hackflow runtime · developers + mentors + judges · fast-paced innovation
+          events · find a challenge worth your weekend
         </p>
         <div className={styles.heroActions}>
           <a href="#hackathons" className={styles.btnPrimary}>
-            Browse hackathons <span aria-hidden>↓</span>
+            $ ls hackathons/ ↓
           </a>
           <Link to="/teams" className={styles.btnGhost}>
-            Find a team
+            $ find --team
           </Link>
         </div>
       </section>
@@ -162,21 +162,21 @@ export default function HackathonsListPage() {
       <section className={styles.stats}>
         <div className={styles.statItem}>
           <div className={styles.statNumber}>{counts.all}</div>
-          <div className={styles.statLabel}>Total hackathons</div>
+          <div className={styles.statLabel}>total_hackathons</div>
         </div>
         <div className={styles.statItem}>
           <div className={styles.statNumber}>{counts.active + counts.upcoming}</div>
-          <div className={styles.statLabel}>Open to join</div>
+          <div className={styles.statLabel}>open_to_join</div>
         </div>
         <div className={styles.statItem}>
           <div className={styles.statNumber}>{counts.completed}</div>
-          <div className={styles.statLabel}>Completed</div>
+          <div className={styles.statLabel}>completed</div>
         </div>
         <div className={styles.statItem}>
           <div className={styles.statNumber}>
             {totalParticipants > 0 ? `${totalParticipants}+` : '∞'}
           </div>
-          <div className={styles.statLabel}>Hacker seats</div>
+          <div className={styles.statLabel}>hacker_seats</div>
         </div>
       </section>
 
@@ -186,11 +186,10 @@ export default function HackathonsListPage() {
           <div className={styles.sectionHead}>
             <span className={styles.sectionEyebrow}>// Featured</span>
             <h2 className={styles.sectionTitle}>
-              Happening <span className={styles.sectionTitleAccent}>now</span>
+              process <span className={styles.sectionTitleAccent}>status=active</span>
             </h2>
             <p className={styles.sectionSubtitle}>
-              Live and upcoming hackathons accepting registrations. Pick your challenge,
-              assemble a team, and start shipping.
+              // live and upcoming hackathons accepting registrations · pick a challenge · assemble team · ship
             </p>
           </div>
           <div className={styles.grid}>
@@ -204,11 +203,10 @@ export default function HackathonsListPage() {
         <div className={styles.sectionHead}>
           <span className={styles.sectionEyebrow}>// Browse</span>
           <h2 className={styles.sectionTitle}>
-            All <span className={styles.sectionTitleAccent}>hackathons</span>
+            ls <span className={styles.sectionTitleAccent}>hackathons/</span>
           </h2>
           <p className={styles.sectionSubtitle}>
-            Filter by status to find ones you can still join, or explore the archive
-            of past competitions.
+            // filter by status · join open events or browse the archive
           </p>
         </div>
 

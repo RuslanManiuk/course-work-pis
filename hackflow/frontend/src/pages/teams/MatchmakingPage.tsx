@@ -42,10 +42,10 @@ export default function MatchmakingPage() {
     <div className={styles.root}>
       <div className={styles.header}>
         <button className={styles.backBtn} onClick={() => navigate('/teams')}>
-          ← Back to Teams
+          ← cd ../teams
         </button>
         <div>
-          <h1 className={styles.title}>Find Team Members</h1>
+          <h1 className={styles.title}>$ find --team-members</h1>
           {hackathon && (
             <p className={styles.subtitle}>{hackathon.title}</p>
           )}
@@ -54,7 +54,7 @@ export default function MatchmakingPage() {
 
       {team && (
         <div className={styles.myTeamCard}>
-          <span className={styles.myTeamLabel}>Your team:</span>
+          <span className={styles.myTeamLabel}>// your team:</span>
           <span className={styles.myTeamName}>{team.name}</span>
           <span className={styles.myTeamSize}>{team.size} member{team.size !== 1 ? 's' : ''}</span>
         </div>
@@ -62,19 +62,19 @@ export default function MatchmakingPage() {
 
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Teams Looking for Members</h2>
+          <h2 className={styles.sectionTitle}>// teams_seeking_members</h2>
           <p className={styles.sectionHint}>
-            Ranked by how many of your skills match their gaps
+            ranked by skill match · highest compatibility first
           </p>
         </div>
 
-        {isLoading && <p className={styles.loading}>Finding matches…</p>}
+        {isLoading && <p className={styles.loading}>$ grep --match-skills…</p>}
 
         {!isLoading && !suggestions?.length && (
           <div className={styles.empty}>
-            <p>No matching teams found.</p>
+            <p>// no matching teams found</p>
             <p className={styles.emptyHint}>
-              Teams appear here when they're still forming and you have skills they need.
+              teams appear here when forming and your skills match their gaps
             </p>
           </div>
         )}
@@ -103,7 +103,7 @@ export default function MatchmakingPage() {
 
               {s.skill_gap.length > 0 && (
                 <div className={styles.skillGap}>
-                  <p className={styles.skillGapLabel}>Your skills they need:</p>
+                  <p className={styles.skillGapLabel}>// skills you bring:</p>
                   <div className={styles.skills}>
                     {s.skill_gap.slice(0, 6).map((sk) => (
                       <span key={sk} className={styles.skillChip}>{sk}</span>

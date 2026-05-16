@@ -72,12 +72,13 @@ export default function LoginPage() {
 
         <div className={styles.bootLog}>
           {BOOT_LINES.map((line, i) => (
-            <div key={i} className={styles.bootLine}>
+            <div key={i} className={styles.bootLine} style={{ animationDelay: `${i * 120}ms` }}>
               {line.type === 'ok'   && <><span className={styles.bootOk}>{line.text.slice(0, 6)}</span>{line.text.slice(6)}</>}
               {line.type === 'warn' && <><span className={styles.bootWarn}>{line.text.slice(0, 6)}</span>{line.text.slice(6)}</>}
               {line.type === 'fail' && <><span className={styles.bootFail}>{line.text.slice(0, 6)}</span>{line.text.slice(6)}</>}
             </div>
           ))}
+          <div className={styles.bootCursor}>▌</div>
           <div className={styles.bootSep} />
           <p className={styles.brandTagline}>
             Build<span className={styles.brandTaglineDot}>.</span><br />
