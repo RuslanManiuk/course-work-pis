@@ -16,16 +16,16 @@ export default function JudgingLandingPage() {
   return (
     <div className={styles.root}>
       <PageHero
-        eyebrow={activeCount > 0 ? `${activeCount} hackathon${activeCount === 1 ? '' : 's'} ready to judge` : 'Judging panel'}
-        title={<>Pick a hackathon, <HeroAccent>score the work</HeroAccent>.</>}
-        subtitle="Review submissions, evaluate against criteria and crown the teams that built the best solution."
+        eyebrow={activeCount > 0 ? `[${activeCount}] hackathon${activeCount === 1 ? '' : 's'} awaiting eval` : '$ judging --panel'}
+        title={<>$ score <HeroAccent>--submissions</HeroAccent></>}
+        subtitle="// review submissions · evaluate against criteria · rank teams by score"
       />
 
-      {isLoading && <p className={styles.loading}>Loading hackathons…</p>}
+      {isLoading && <p className={styles.loading}>$ ls hackathons/…</p>}
 
       {!isLoading && !data?.length && (
         <div className={styles.empty}>
-          <p>No hackathons available for judging.</p>
+          <p>// no hackathons available for judging</p>
         </div>
       )}
 
@@ -45,7 +45,7 @@ export default function JudgingLandingPage() {
               </div>
             )}
             <span className={styles.cta}>
-              Open judging panel <span aria-hidden>→</span>
+              $ open --judging-panel →
             </span>
           </Link>
         ))}

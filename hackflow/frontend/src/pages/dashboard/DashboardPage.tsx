@@ -25,7 +25,7 @@ function DeadlineBar({ label, deadline }: { label: string; deadline: string }) {
       <div className={styles.deadlineLabel}>
         <span>{label}</span>
         <span className={passed ? styles.deadlinePassed : urgent ? styles.deadlineUrgent : styles.deadlineOk}>
-          {passed ? 'Passed' : days <= 1 ? `${hours}h left` : `${days}d left`}
+          {passed ? '[EXPIRED]' : days <= 1 ? `ttl:${hours}h` : `ttl:${days}d`}
         </span>
       </div>
       <div className={styles.progressTrack}>
@@ -55,7 +55,7 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
         </div>
         <div className={styles.teamActions}>
           <Link to={`/workspace/${team.id}`} className={styles.workspaceBtn}>
-            Open Workspace →
+            $ cd workspace/
           </Link>
         </div>
       </div>
@@ -76,7 +76,7 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
 
       {hackathon && (
         <div className={styles.deadlines}>
-          <DeadlineBar label="Submission deadline" deadline={hackathon.submission_deadline} />
+          <DeadlineBar label="// submission_deadline" deadline={hackathon.submission_deadline} />
         </div>
       )}
 
@@ -84,12 +84,12 @@ function TeamCard({ team, hackathon }: { team: Team; hackathon?: Hackathon }) {
         <div className={styles.discordLinks}>
           {discordUrl && (
             <a href={discordUrl} target="_blank" rel="noreferrer" className={styles.discordBtn}>
-              💬 Team Chat
+              [irc] #team-chat
             </a>
           )}
           {voiceUrl && (
             <a href={voiceUrl} target="_blank" rel="noreferrer" className={styles.discordBtn}>
-              🔈 Voice Channel
+              [voice] connect
             </a>
           )}
         </div>
@@ -124,16 +124,16 @@ export default function DashboardPage() {
       <section className={styles.hero}>
         <span className={styles.heroEyebrow}>
           <span className={styles.heroPulse} />
-          {activeCount > 0
-            ? `${activeCount} hackathon${activeCount === 1 ? '' : 's'} live now`
-            : 'No live hackathons'}
+          {`● HACKFLOW RUNTIME v2.5.0 · ${activeCount} proc active`}
         </span>
         <h1 className={styles.greeting}>
-          Welcome back, <span className={styles.name}>{user?.username}</span>.
+          <span style={{ color: 'var(--text-muted)', fontSize: '0.55em', display: 'block', marginBottom: 4 }}>$ whoami</span>
+          <span className={styles.name}>{user?.username}</span>
         </h1>
         <p className={styles.subtitle}>
-          Here's what's happening across HackFlow — your teams, your deadlines and the
-          hackathons taking shape right now.
+          {activeCount > 0
+            ? `[PID:${activeCount}] hackathon process${activeCount === 1 ? '' : 'es'} running — check your teams and deadlines.`
+            : 'No active processes. Browse hackathons to join one.'}
         </p>
       </section>
 
@@ -142,9 +142,9 @@ export default function DashboardPage() {
           <div className={styles.sectionHeader}>
             <div>
               <span className={styles.sectionEyebrow}>// My teams</span>
-              <h2 className={styles.sectionTitle}>Teams you're shipping with</h2>
+              <h2 className={styles.sectionTitle}>active team processes</h2>
             </div>
-            <Link to="/teams" className={styles.seeAll}>Manage <span aria-hidden>→</span></Link>
+            <Link to="/teams" className={styles.seeAll}>ls -la →</Link>
           </div>
           <div className={styles.teamsGrid}>
             {myTeams.map((team) => (
@@ -158,13 +158,13 @@ export default function DashboardPage() {
         <div className={styles.sectionHeader}>
           <div>
             <span className={styles.sectionEyebrow}>// Hackathons</span>
-            <h2 className={styles.sectionTitle}>Live and accepting hackers</h2>
+            <h2 className={styles.sectionTitle}>live hackathons · accepting input</h2>
           </div>
-          <Link to="/hackathons" className={styles.seeAll}>View all <span aria-hidden>→</span></Link>
+          <Link to="/hackathons" className={styles.seeAll}>ls -la →</Link>
         </div>
 
         {!hackathons?.length && (
-          <p className={styles.empty}>No active hackathons right now.</p>
+          <p className={styles.empty}>// no active processes</p>
         )}
 
         <div className={styles.grid}>
@@ -184,7 +184,7 @@ export default function DashboardPage() {
                 <h3 className={styles.cardTitle}>{h.title}</h3>
                 <p className={styles.cardDesc}>{h.description.slice(0, 120)}…</p>
                 <div className={styles.cardMeta}>
-                  <span>Ends {new Date(h.end_date).toLocaleDateString()}</span>
+                  <span>deadline: {new Date(h.end_date).toLocaleDateString()}</span>
                   <span className={styles.statusBadge}>{h.status}</span>
                 </div>
               </div>

@@ -4,6 +4,7 @@ import { useAuth } from '@/hooks/useAuth';
 import styles from './AppLayout.module.css';
 import NotificationBell from '@/components/ui/NotificationBell';
 import CommandPalette from '@/components/ui/CommandPalette';
+import ErrorBoundary from '@/components/ui/ErrorBoundary';
 
 // ── Inline SVG Icons ──────────────────────────────────────────────────────────
 
@@ -219,7 +220,7 @@ export default function AppLayout() {
           </div>
           <span className={styles.statusChip}>
             <span className={styles.statusDot} />
-            All systems live
+            sys:online
           </span>
         </div>
 
@@ -317,7 +318,7 @@ export default function AppLayout() {
               aria-label="Open command palette"
             >
               <SearchIcon />
-              <span>Search hackathons, teams…</span>
+              <span>$ grep -r hackathon teams/</span>
               <kbd>⌘K</kbd>
             </button>
             <span
@@ -331,7 +332,9 @@ export default function AppLayout() {
           </div>
         </header>
         <main className={styles.content}>
-          <Outlet />
+          <ErrorBoundary>
+            <Outlet />
+          </ErrorBoundary>
         </main>
       </div>
 

@@ -142,12 +142,12 @@ export default function JudgingPage() {
 
   return (
     <div className={styles.root}>
-      <h1 className={styles.title}>Judging Panel</h1>
+      <h1 className={styles.title}>// judging_panel</h1>
 
       <div className={styles.grid}>
         {/* Submissions list */}
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>Submissions to Review</h2>
+          <h2 className={styles.sectionTitle}>// submissions_queue</h2>
           <div className={styles.subList}>
             {submissions?.map((s) => (
               <button
@@ -162,11 +162,11 @@ export default function JudgingPage() {
                 <span className={styles.subId}>
                   {submissionTeamMap[s.submission_id] ?? s.team_name ?? s.submission_id.slice(0, 8) + '…'}
                 </span>
-                {s.scored_by_me && <span className={styles.scoredBadge}>✓ scored</span>}
+                {s.scored_by_me && <span className={styles.scoredBadge}>[ OK ] scored</span>}
               </button>
             ))}
             {!submissions?.length && (
-              <p className={styles.empty}>No submissions yet.</p>
+              <p className={styles.empty}>// no submissions yet</p>
             )}
           </div>
         </section>
@@ -201,7 +201,7 @@ export default function JudgingPage() {
                       rel="noopener noreferrer"
                       className={styles.submissionLink}
                     >
-                      🎬 Video Demo
+                      [video] demo →
                     </a>
                   )}
                   {selectedSubmissionData.presentation_url && (
@@ -211,7 +211,7 @@ export default function JudgingPage() {
                       rel="noopener noreferrer"
                       className={styles.submissionLink}
                     >
-                      📊 Presentation
+                      [slides] →
                     </a>
                   )}
                 </div>
@@ -225,9 +225,9 @@ export default function JudgingPage() {
 
             {(aiSummaryLoading || aiSummary) && (
               <div className={styles.aiSummaryCard}>
-                <span className={styles.aiSummaryLabel}>✨ AI Snapshot</span>
+                <span className={styles.aiSummaryLabel}>$ ai --snapshot</span>
                 {aiSummaryLoading
-                  ? <span className={styles.aiSummaryText} style={{ opacity: 0.5 }}>Generating summary…</span>
+                  ? <span className={styles.aiSummaryText} style={{ opacity: 0.5 }}>$ generating...</span>
                   : <span className={styles.aiSummaryText}>{aiSummary}</span>
                 }
               </div>
@@ -245,7 +245,7 @@ export default function JudgingPage() {
 
       {/* Leaderboard */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Leaderboard</h2>
+        <h2 className={styles.sectionTitle}>// leaderboard</h2>
         <div className={styles.leaderboard}>
           {leaderboard?.entries.map((e: LeaderboardEntry) => (
             <div key={e.team_id} className={styles.lbRow}>
@@ -257,7 +257,7 @@ export default function JudgingPage() {
             </div>
           ))}
           {!leaderboard?.entries.length && (
-            <p className={styles.empty}>No scores yet.</p>
+            <p className={styles.empty}>// no scores yet</p>
           )}
         </div>
       </section>
@@ -265,16 +265,16 @@ export default function JudgingPage() {
       {/* AI Assistant */}
       {(user?.role === 'judge' || user?.role === 'organizer') && (
         <section className={styles.section}>
-          <h2 className={styles.sectionTitle}>AI Assistant</h2>
+          <h2 className={styles.sectionTitle}>// ai_assistant</h2>
           <form onSubmit={handleAiQuery} className={styles.aiForm}>
             <input
               className={styles.aiInput}
-              placeholder="Ask about submissions…"
+              placeholder="$ query --ai 'ask about submissions'"
               value={aiQuery}
               onChange={(e) => setAiQuery(e.target.value)}
             />
             <button type="submit" className={styles.aiBtn} disabled={aiLoading}>
-              {aiLoading ? 'Thinking…' : 'Ask'}
+              {aiLoading ? '$ thinking...' : '$ exec'}
             </button>
           </form>
           {aiAnswer && (
@@ -284,7 +284,7 @@ export default function JudgingPage() {
           )}
           {aiError && (
             <div className={styles.aiError}>
-              <p>⚠️ {aiError}</p>
+              <p>[ERR] {aiError}</p>
             </div>
           )}
         </section>
@@ -358,7 +358,7 @@ function ScoringForm({
     <section className={styles.section}>
       <div className={styles.scoringHeader}>
         <h2 className={styles.sectionTitle}>
-          Score: {teamName ?? submissionId.slice(0, 8) + '…'}
+          // score: {teamName ?? submissionId.slice(0, 8) + '…'}
         </h2>
         <button
           type="button"
@@ -366,11 +366,11 @@ function ScoringForm({
           disabled={aiScoring}
           onClick={handleAiAutoScore}
         >
-          {aiScoring ? '⏳ AI Scoring…' : '✨ AI Auto-Score'}
+          {aiScoring ? '$ scoring...' : '$ ai --auto-score'}
         </button>
       </div>
-      {aiApplied && <p className={styles.aiApplied}>✅ AI scores applied — review and adjust before submitting</p>}
-      {aiScoreError && <p className={styles.aiScoreError}>⚠️ {aiScoreError}</p>}
+      {aiApplied && <p className={styles.aiApplied}>[ OK ] ai scores applied — review and adjust before submitting</p>}
+      {aiScoreError && <p className={styles.aiScoreError}>[ERR] {aiScoreError}</p>}
       <form
         className={styles.scoreForm}
         onSubmit={(e) => {
@@ -399,7 +399,7 @@ function ScoringForm({
             />
             <span className={styles.scoreVal}>{scores[c.id]?.score}/{c.max_score ?? 10}</span>
             <input
-              placeholder="Feedback (optional)"
+              placeholder="// feedback (optional)"
               className={styles.feedbackInput}
               value={scores[c.id]?.feedback}
               onChange={(e) =>
@@ -413,10 +413,10 @@ function ScoringForm({
         ))}
         <div className={styles.formActions}>
           <button type="submit" className={styles.submitBtn} disabled={evaluate.isPending}>
-            {evaluate.isPending ? 'Submitting…' : 'Submit Scores'}
+            {evaluate.isPending ? '$ submitting...' : '$ submit --scores'}
           </button>
           <button type="button" className={styles.cancelBtn} onClick={onDone}>
-            Cancel
+            abort
           </button>
         </div>
       </form>

@@ -15,14 +15,14 @@
 /* ── Cover hero ─────────────────────────────────────────────────── */
 .header {
   position: relative;
-  border-radius: var(--radius-xl);
+  border-radius: 0;
   border: 1px solid var(--color-border-subtle);
   overflow: hidden;
   isolation: isolate;
   padding: var(--space-12) var(--space-8) var(--space-6);
   background:
-    radial-gradient(ellipse at 20% 0%, rgba(108,99,255,0.25) 0%, transparent 55%),
-    radial-gradient(ellipse at 80% 100%, rgba(62,207,207,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 20% 0%, oklch(72% 0.28 72 / 0.16) 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 100%, oklch(70% 0.26 140 / 0.14) 0%, transparent 55%),
     var(--gradient-dark-panel);
   display: flex;
   align-items: flex-end;
@@ -33,7 +33,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background-image: radial-gradient(circle, rgba(108,99,255,0.3) 1px, transparent 1px);
+  background-image: radial-gradient(circle, oklch(72% 0.28 72 / 0.20) 1px, transparent 1px);
   background-size: 28px 28px;
   opacity: 0.16;
   pointer-events: none;
@@ -45,7 +45,7 @@
 .avatar {
   width: 96px;
   height: 96px;
-  border-radius: 50%;
+  border-radius: 0;
   overflow: hidden;
   flex-shrink: 0;
   background: var(--color-bg-secondary);
@@ -82,10 +82,10 @@
   font-weight: var(--font-bold);
   letter-spacing: -0.04em;
   line-height: 1;
-  background: var(--gradient-brand-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--color-primary); text-shadow: var(--shadow-glow-primary);
+  
+  
+  
 }
 
 .email {
@@ -97,10 +97,10 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(108,99,255,0.12);
+  background: oklch(72% 0.28 72 / 0.08);
   color: var(--color-primary);
-  border: 1px solid rgba(108,99,255,0.3);
-  border-radius: var(--radius-full);
+  border: 1px solid oklch(72% 0.28 72 / 0.20);
+  border-radius: 0;
   padding: 4px 12px;
   font-family: var(--font-mono);
   font-size: 11px;
@@ -132,7 +132,7 @@
 .section {
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
+  border-radius: 0;
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
@@ -157,7 +157,7 @@
   width: 100%;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-2) var(--space-3);
   color: var(--text-primary);
   font-size: var(--text-sm);
@@ -184,7 +184,7 @@
   gap: var(--space-1);
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-full);
+  border-radius: 0;
   padding: 3px 10px 3px 12px;
   font-size: var(--text-sm);
   color: var(--text-primary);
@@ -197,7 +197,7 @@
   margin-left: 4px;
 }
 
-.prof_beginner { border-color: #6c63ff44; color: #a0a0c8; }
+.prof_beginner { border-color: oklch(72% 0.28 72)44; color: #a0a0c8; }
 .prof_intermediate { border-color: var(--color-accent); color: var(--color-accent); }
 .prof_advanced { border-color: var(--color-warning); color: var(--color-warning); }
 .prof_expert { border-color: var(--color-success); color: var(--color-success); }
@@ -233,7 +233,7 @@
   min-width: 140px;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-2) var(--space-3);
   color: var(--text-primary);
   font-size: var(--text-sm);
@@ -247,7 +247,7 @@
   width: 60px;
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-2) var(--space-2);
   color: var(--text-primary);
   font-size: var(--text-sm);
@@ -260,7 +260,7 @@
 .selectSm {
   background: var(--color-bg);
   border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-2) var(--space-3);
   color: var(--text-primary);
   font-size: var(--text-sm);
@@ -275,7 +275,7 @@
   background: var(--color-primary-dim);
   color: var(--color-primary);
   border: 1px solid var(--color-primary);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
   cursor: pointer;
@@ -297,7 +297,7 @@
   background: var(--color-primary);
   color: #fff;
   border: none;
-  border-radius: var(--radius-md);
+  border-radius: 0;
   padding: var(--space-3) var(--space-6);
   font-size: var(--text-sm);
   font-weight: var(--font-semibold);

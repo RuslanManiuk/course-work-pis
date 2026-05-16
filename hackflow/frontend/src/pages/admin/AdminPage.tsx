@@ -82,31 +82,31 @@ export default function AdminPage() {
   return (
     <div className={styles.root}>
       <PageHero
-        eyebrow="Organizer console"
-        title={<>Run the <HeroAccent>show</HeroAccent>.</>}
-        subtitle="Manage users, hackathons, criteria and broadcast announcements across the platform."
+        eyebrow="$ sudo --organizer-console"
+        title={<>$ admin <HeroAccent>--control</HeroAccent></>}
+        subtitle="// manage users · hackathons · criteria · broadcast across the platform"
       />
 
       {/* KPI strip */}
       <div className={styles.kpiStrip}>
         <div className={styles.kpiItem}>
           <div className={styles.kpiNumber}>{userCount}</div>
-          <div className={styles.kpiLabel}>Users</div>
+          <div className={styles.kpiLabel}>users</div>
         </div>
         <div className={styles.kpiItem}>
           <div className={styles.kpiNumber}>{hackathonCount}</div>
-          <div className={styles.kpiLabel}>Hackathons</div>
+          <div className={styles.kpiLabel}>hackathons</div>
         </div>
         <div className={styles.kpiItem}>
           <div className={styles.kpiNumber}>{activeHackathons}</div>
-          <div className={styles.kpiLabel}>Live now</div>
+          <div className={styles.kpiLabel}>live_now</div>
         </div>
       </div>
 
       {/* ── Users Table ───────────────────────────────────────────── */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Users</h2>
+          <h2 className={styles.sectionTitle}>// users</h2>
           <div className={styles.filters}>
             <select
               className={styles.select}
@@ -121,7 +121,7 @@ export default function AdminPage() {
           </div>
         </div>
 
-        {isLoading && <p className={styles.loading}>Loading users…</p>}
+        {isLoading && <p className={styles.loading}>$ cat users/*.json…</p>}
 
         {!isLoading && (
           <div className={styles.tableWrap}>
@@ -184,10 +184,10 @@ export default function AdminPage() {
 
       {/* ── Broadcast ─────────────────────────────────────────────── */}
       <section className={styles.section}>
-        <h2 className={styles.sectionTitle}>Send Broadcast Notification</h2>
+        <h2 className={styles.sectionTitle}>// broadcast --notification</h2>
 
         <div className={styles.broadcastCard}>
-          <label className={styles.label}>Hackathon (optional — omit to send to all active users)</label>
+          <label className={styles.label}>// hackathon (optional · omit to broadcast to all active users)</label>
           <select
             className={styles.select}
             value={broadcastForm.hackathon_id}
@@ -199,25 +199,25 @@ export default function AdminPage() {
             ))}
           </select>
 
-          <label className={styles.label}>Title</label>
+          <label className={styles.label}>// title</label>
           <input
             className={styles.input}
-            placeholder="Notification title"
+            placeholder="notification title"
             value={broadcastForm.title}
             onChange={(e) => setBroadcastForm((f) => ({ ...f, title: e.target.value }))}
           />
 
-          <label className={styles.label}>Message</label>
+          <label className={styles.label}>// message</label>
           <textarea
             className={styles.textarea}
-            placeholder="Notification body…"
+            placeholder="// notification body…"
             rows={4}
             value={broadcastForm.message}
             onChange={(e) => setBroadcastForm((f) => ({ ...f, message: e.target.value }))}
           />
 
           {broadcastSent && (
-            <p className={styles.success}>Broadcast queued successfully!</p>
+            <p className={styles.success}>[ OK ] broadcast queued</p>
           )}
 
           <button
@@ -225,7 +225,7 @@ export default function AdminPage() {
             onClick={() => broadcast.mutate()}
             disabled={!broadcastForm.title.trim() || !broadcastForm.message.trim() || broadcast.isPending}
           >
-            {broadcast.isPending ? 'Sending…' : 'Send Broadcast'}
+            {broadcast.isPending ? '$ sending...' : '$ broadcast --all'}
           </button>
         </div>
       </section>
@@ -233,9 +233,9 @@ export default function AdminPage() {
       {/* ── Hackathons ─────────────────────────────────────────────── */}
       <section className={styles.section}>
         <div className={styles.sectionHeader}>
-          <h2 className={styles.sectionTitle}>Hackathons</h2>
+          <h2 className={styles.sectionTitle}>// hackathons</h2>
           <button className={styles.primaryBtn} onClick={() => setShowCreateHackathon(true)}>
-            + Create Hackathon
+            $ create --hackathon
           </button>
         </div>
 
@@ -257,7 +257,7 @@ export default function AdminPage() {
                   className={styles.ghostBtn}
                   onClick={() => setCriteriaHackathon(h)}
                 >
-                  ⚖ Manage Criteria
+                  $ manage --criteria
                 </button>
                 {STATUS_NEXT[h.status] && (
                   <button
@@ -272,7 +272,7 @@ export default function AdminPage() {
             </div>
           ))}
           {!hackathons?.length && (
-            <p className={styles.empty}>No hackathons yet. Create one above.</p>
+            <p className={styles.empty}>// no hackathons yet · run $ create --hackathon</p>
           )}
         </div>
       </section>
@@ -354,9 +354,9 @@ function HackathonModal({ onClose, onCreated }: { onClose: () => void; onCreated
   return (
     <div className={styles.overlay} onClick={onClose}>
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h2 className={styles.modalTitle}>Create Hackathon</h2>
+        <h2 className={styles.modalTitle}>// create_hackathon</h2>
 
-        <label className={styles.label}>Title</label>
+        <label className={styles.label}>// title</label>
         <input
           className={styles.input}
           placeholder="e.g. HackFlow 2026"
@@ -373,7 +373,7 @@ function HackathonModal({ onClose, onCreated }: { onClose: () => void; onCreated
             onClick={handleAiDescribe}
             title={!form.title.trim() ? 'Enter a title first' : undefined}
           >
-            {aiDescLoading ? '⏳ Generating…' : '✨ Generate with AI'}
+            {aiDescLoading ? '$ generating...' : '$ ai --generate-desc'}
           </button>
         </div>
         <textarea
@@ -475,9 +475,9 @@ function HackathonModal({ onClose, onCreated }: { onClose: () => void; onCreated
             onClick={() => create.mutate()}
             disabled={!form.title.trim() || !form.description.trim() || create.isPending}
           >
-            {create.isPending ? 'Creating…' : 'Create Hackathon'}
+            {create.isPending ? '$ creating...' : '$ create --hackathon'}
           </button>
-          <button className={styles.ghostBtn} onClick={onClose}>Cancel</button>
+          <button className={styles.ghostBtn} onClick={onClose}>abort</button>
         </div>
       </div>
     </div>

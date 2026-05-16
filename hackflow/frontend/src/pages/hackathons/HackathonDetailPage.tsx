@@ -54,10 +54,10 @@ export default function HackathonDetailPage() {
   const isOwner = user?.role === 'organizer' && hackathon?.organizer_id === user?.id;
 
   if (isLoading) {
-    return <div className={styles.loading}>Loading hackathon…</div>;
+    return <div className={styles.loading}>$ cat hackathon.json…</div>;
   }
   if (error || !hackathon) {
-    return <div className={styles.error}>Hackathon not found.</div>;
+    return <div className={styles.error}>[ERR] hackathon not found</div>;
   }
 
   const registrationDays = daysUntil(hackathon.registration_deadline);
@@ -98,7 +98,7 @@ export default function HackathonDetailPage() {
         {/* Main content */}
         <div className={styles.main}>
           <section className={styles.section}>
-            <h2 className={styles.sectionTitle}>About</h2>
+            <h2 className={styles.sectionTitle}>// about</h2>
             <p className={styles.description}>{hackathon.description}</p>
           </section>
 
@@ -112,7 +112,7 @@ export default function HackathonDetailPage() {
 
           {criteria && criteria.length > 0 && (
             <section className={styles.section}>
-              <h2 className={styles.sectionTitle}>Evaluation Criteria</h2>
+              <h2 className={styles.sectionTitle}>// eval_criteria</h2>
               <div className={styles.criteriaList}>
                 {criteria.map((c) => (
                   <div key={c.id} className={styles.criteriaCard}>
@@ -133,7 +133,7 @@ export default function HackathonDetailPage() {
         {/* Sidebar */}
         <aside className={styles.sidebar}>
           <div className={styles.sideCard}>
-            <h3 className={styles.sideCardTitle}>Key Dates</h3>
+            <h3 className={styles.sideCardTitle}>// key_dates</h3>
             <div className={styles.dateList}>
               <div className={styles.dateRow}>
                 <span className={styles.dateLabel}>Starts</span>
@@ -165,7 +165,7 @@ export default function HackathonDetailPage() {
           </div>
 
           <div className={styles.sideCard}>
-            <h3 className={styles.sideCardTitle}>Team Info</h3>
+            <h3 className={styles.sideCardTitle}>// team_config</h3>
             <div className={styles.infoList}>
               <div className={styles.infoRow}>
                 <span className={styles.infoLabel}>Team size</span>
@@ -184,10 +184,10 @@ export default function HackathonDetailPage() {
 
           {myTeamForHackathon ? (
             <div className={styles.myTeamCard}>
-              <p className={styles.myTeamLabel}>Your team</p>
+              <p className={styles.myTeamLabel}>// your team</p>
               <p className={styles.myTeamName}>{myTeamForHackathon.name}</p>
               <Link to={`/workspace/${myTeamForHackathon.id}`} className={styles.primaryBtn}>
-                Open Workspace
+                $ cd workspace/
               </Link>
             </div>
           ) : (
@@ -196,20 +196,20 @@ export default function HackathonDetailPage() {
                 className={styles.primaryBtn}
                 onClick={() => navigate(`/teams?hackathon=${hackathonId}`)}
               >
-                Join / Create Team
+                $ join --team
               </button>
             )
           )}
 
           {user?.role === 'judge' && hackathon.status === 'active' && (
             <Link to={`/judging/${hackathonId}`} className={styles.secondaryBtn}>
-              Go to Judging Panel
+              $ open --judging-panel →
             </Link>
           )}
 
           {user?.role === 'organizer' && (
             <Link to={`/admin`} className={styles.ghostBtn}>
-              Manage in Admin Panel
+              $ sudo --admin-panel
             </Link>
           )}
         </aside>

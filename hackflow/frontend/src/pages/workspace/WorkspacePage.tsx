@@ -15,9 +15,9 @@ interface WorkspacePageProps {
 type ColumnKey = 'todo' | 'in_progress' | 'done';
 
 const COLUMNS: { key: ColumnKey; label: string; columnClass: string; dotClass: string }[] = [
-  { key: 'todo',        label: 'To Do',       columnClass: styles.columnTodo,       dotClass: styles.columnDotTodo },
-  { key: 'in_progress', label: 'In Progress', columnClass: styles.columnInProgress, dotClass: styles.columnDotInProgress },
-  { key: 'done',        label: 'Done',        columnClass: styles.columnDone,       dotClass: styles.columnDotDone },
+  { key: 'todo',        label: 'PROC[TODO]',   columnClass: styles.columnTodo,       dotClass: styles.columnDotTodo },
+  { key: 'in_progress', label: 'PROC[ACTIVE]', columnClass: styles.columnInProgress, dotClass: styles.columnDotInProgress },
+  { key: 'done',        label: 'PROC[DONE]',   columnClass: styles.columnDone,       dotClass: styles.columnDotDone },
 ];
 
 const LABELS: { value: CardLabel; short: string }[] = [
@@ -109,16 +109,16 @@ export default function WorkspacePage({ teamId }: WorkspacePageProps) {
     <div className={styles.root}>
       <PageHero
         compact
-        eyebrow={team?.name ? `Team · ${team.name}` : 'Workspace'}
-        title={<>Ship your <HeroAccent>build</HeroAccent>.</>}
+        eyebrow={team?.name ? `$ cd teams/${team.name}/workspace` : '$ cd workspace'}
+        title={<>$ git push origin <HeroAccent>main</HeroAccent></>}
         subtitle={
           totalCards > 0
-            ? `${doneCount} of ${totalCards} cards done · keep the momentum.`
-            : 'Plan, track and ship your hackathon project on this board.'
+            ? `[${doneCount}/${totalCards}] tasks committed · keep shipping`
+            : '// kanban board · plan, track and ship your hackathon project'
         }
         actions={
           <button className={styles.addBtn} onClick={() => setAdding(true)}>
-            + New card
+            $ touch card
           </button>
         }
       />
@@ -134,12 +134,12 @@ export default function WorkspacePage({ teamId }: WorkspacePageProps) {
           <input
             autoFocus
             className={styles.addInput}
-            placeholder="Card title…"
+            placeholder="$ echo 'card title'…"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
           />
-          <button type="submit" className={styles.addSubmit}>Add</button>
-          <button type="button" className={styles.addCancel} onClick={() => setAdding(false)}>Cancel</button>
+          <button type="submit" className={styles.addSubmit}>create</button>
+          <button type="button" className={styles.addCancel} onClick={() => setAdding(false)}>abort</button>
         </form>
       )}
 
@@ -269,7 +269,7 @@ function KanbanCardItem({
       {card.description && <p className={styles.cardDesc}>{card.description}</p>}
       {card.due_date && (
         <p className={styles.dueDate}>
-          Due {new Date(card.due_date).toLocaleDateString()}
+          deadline: {new Date(card.due_date).toLocaleDateString()}
         </p>
       )}
       {nextStatus[card.status] && (
@@ -277,7 +277,7 @@ function KanbanCardItem({
           className={styles.moveBtn}
           onClick={() => onMove(nextStatus[card.status]!)}
         >
-          → Move to {nextStatus[card.status]?.replace('_', ' ')}
+          mv → [{nextStatus[card.status]?.toUpperCase().replace('_', '_')}]
         </button>
       )}
     </div>
@@ -397,15 +397,15 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
   return (
     <div className={styles.submissionPanel}>
       <div className={styles.submissionHeader}>
-        <h2 className={styles.submissionTitle}>Project Submission</h2>
+        <h2 className={styles.submissionTitle}>// project submission</h2>
         {!submission && !showForm && (
           <button className={styles.addBtn} onClick={() => setShowForm(true)}>
-            + Submit Project
+            $ git push --submit
           </button>
         )}
         {submission && !showForm && (
           <button className={styles.editBtn} onClick={startEdit}>
-            ✏ Edit
+            [edit]
           </button>
         )}
       </div>
@@ -417,7 +417,7 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
               {submission.status.replace('_', ' ')}
             </span>
             <span className={styles.repoPrivacyBadge}>
-              {submission.repo_is_private ? '🔒 Private' : '🔓 Public'}
+              {submission.repo_is_private ? '[private]' : '[public]'}
             </span>
           </div>
 
@@ -452,13 +452,13 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
                     {repoStats.language}
                   </span>
                 )}
-                <span className={styles.repoStatItem}>⭐ {repoStats.stars}</span>
-                <span className={styles.repoStatItem}>🍴 {repoStats.forks}</span>
-                <span className={styles.repoStatItem}>📝 {repoStats.commit_count} commits</span>
-                <span className={styles.repoStatItem}>👥 {repoStats.contributors_count}</span>
+                <span className={styles.repoStatItem}>★ {repoStats.stars}</span>
+                <span className={styles.repoStatItem}>⑂ {repoStats.forks}</span>
+                <span className={styles.repoStatItem}>{repoStats.commit_count} commits</span>
+                <span className={styles.repoStatItem}>{repoStats.contributors_count} contributors</span>
               </div>
               <button className={styles.statsBtn} onClick={() => setShowStats(true)}>
-                View Full Stats ↗
+                git log --stat →
               </button>
             </div>
           )}
@@ -470,23 +470,23 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
           {needsAction && (
             <div className={styles.accessWarning}>
               {accessStatus === 'access_lost' ? (
-                <p>⚠️ <strong>Access Lost.</strong> It seems the bot was removed from your repository.</p>
+                <p>[ERR] access_lost — bot was removed from repository</p>
               ) : (
-                <p>⚠️ <strong>Access Pending.</strong> Please add our bot <code>hackflow-bot</code> as a collaborator with <em>Read</em> access to your private repository, then click Retry.</p>
+                <p>[WARN] access_pending — add <code>hackflow-bot</code> as collaborator with Read access, then retry</p>
               )}
               <button
                 className={styles.retryBtn}
                 onClick={() => verify.mutate()}
                 disabled={verify.isPending}
               >
-                {verify.isPending ? 'Checking…' : 'Retry Access Check'}
+                {verify.isPending ? '$ checking...' : '$ retry --verify-access'}
               </button>
               {error && <p className={styles.formError}>{error}</p>}
             </div>
           )}
 
           {accessStatus === 'accessible' && submission.repo_is_private && (
-            <p className={styles.accessOk}>✅ Bot access confirmed</p>
+            <p className={styles.accessOk}>[ OK ] bot access verified</p>
           )}
         </div>
       )}
@@ -501,7 +501,7 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
             else create.mutate();
           }}
         >
-          <label className={styles.formLabel}>Repository URL</label>
+          <label className={styles.formLabel}>// repository URL</label>
           <input
             className={styles.formInput}
             placeholder="https://github.com/owner/repo"
@@ -511,7 +511,7 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
           />
 
           <label className={styles.formLabel}>
-            Description (min 20 chars)
+            // description (min 20 chars)
             {description.trim().length > 0 && description.trim().length < 20 && (
               <span style={{ color: 'var(--color-danger)', marginLeft: '0.5rem', fontSize: '0.8em' }}>
                 {description.trim().length}/20
@@ -528,7 +528,7 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
             minLength={20}
           />
 
-          <label className={styles.formLabel}>Video Demo URL <span style={{color:'var(--text-muted)',fontWeight:'normal'}}>(optional — YouTube / Loom)</span></label>
+          <label className={styles.formLabel}>// video demo URL <span style={{color:'var(--text-muted)',fontWeight:'normal',letterSpacing:'0.06em'}}>(optional — YouTube / Loom)</span></label>
           <input
             className={styles.formInput}
             placeholder="https://youtube.com/watch?v=..."
@@ -537,7 +537,7 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
             type="url"
           />
 
-          <label className={styles.formLabel}>Presentation URL <span style={{color:'var(--text-muted)',fontWeight:'normal'}}>(optional — Google Slides / Canva)</span></label>
+          <label className={styles.formLabel}>// presentation URL <span style={{color:'var(--text-muted)',fontWeight:'normal',letterSpacing:'0.06em'}}>(optional — Google Slides / Canva)</span></label>
           <input
             className={styles.formInput}
             placeholder="https://docs.google.com/presentation/..."
@@ -547,21 +547,21 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
           />
 
           <div className={styles.toggleRow}>
-            <span className={styles.formLabel}>Repository type</span>
+            <span className={styles.formLabel}>// repo visibility</span>
             <div className={styles.toggle}>
               <button
                 type="button"
                 className={`${styles.toggleBtn} ${!isPrivate ? styles.toggleActive : ''}`}
                 onClick={() => setIsPrivate(false)}
               >
-                🔓 Public
+                [public]
               </button>
               <button
                 type="button"
                 className={`${styles.toggleBtn} ${isPrivate ? styles.toggleActive : ''}`}
                 onClick={() => setIsPrivate(true)}
               >
-                🔒 Private
+                [private]
               </button>
             </div>
           </div>
@@ -578,11 +578,11 @@ function SubmissionPanel({ teamId, hackathonId }: { teamId: string; hackathonId:
           <div className={styles.formActions}>
             <button type="submit" className={styles.addBtn} disabled={create.isPending || update.isPending}>
               {isEditing
-                ? (update.isPending ? 'Saving…' : 'Save Changes')
-                : (create.isPending ? 'Submitting…' : 'Submit')}
+                ? (update.isPending ? '$ saving...' : '$ git commit --amend')
+                : (create.isPending ? '$ pushing...' : '$ git push --submit')}
             </button>
             <button type="button" className={styles.addCancel} onClick={() => { setShowForm(false); setIsEditing(false); setError(''); }}>
-              Cancel
+              abort
             </button>
           </div>
         </form>
