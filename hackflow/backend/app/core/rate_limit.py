@@ -1,6 +1,4 @@
 """Redis-based sliding-window rate limiter for FastAPI via Depends."""
-from __future__ import annotations
-
 import time
 
 import redis.asyncio as aioredis
